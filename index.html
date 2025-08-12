@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sift Savvy — Turn Emails Into Qualified B2B Leads</title>
+  <meta name="description" content="Extract qualified business leads from emails in minutes. Contact + company + need + urgency score. Filters noise. CSV export. Not a CRM — a focused micro-tool for action." />
+
+  <!-- GA4: replace G-XXXXXXXXXX with your Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    // Pass URL params (including UTM) automatically
+    gtag('config', 'G-XXXXXXXXXX', { send_page_view: true });
+
+    // Helper: track outbound/link/button clicks
+    function track(eventName, params={}) {
+      if (!window.gtag) return;
+      gtag('event', eventName, params);
+    }
+  </script>
+
+  <style>
+    :root{
+      --bg:#0b0d10; --card:#111418; --muted:#8b95a7; --text:#e7ecf3; --accent:#4da3ff; --accent-2:#6cffc3;
+      --border:#1c232c; --ok:#35c759; --warn:#ffcc00; --bad:#ff453a;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji";}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:1140px;margin:0 auto;padding:24px}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:12px 0}
+    .brand{display:flex;gap:10px;align-items:center}
+    .badge{font-size:12px;border:1px solid var(--border);padding:4px 8px;border-radius:999px;color:var(--muted)}
+    .hero{display:grid;grid-template-columns:1.2fr 1fr;gap:36px;align-items:center;padding:32px 0}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px}
+    h1{font-size:40px;line-height:1.1;margin:0 0 12px}
+    h2{font-size:28px;margin:24px 0 12px}
+    p{color:var(--text);opacity:.9}
+    .muted{color:var(--muted)}
+    .kpis{display:flex;gap:16px;flex-wrap:wrap;margin-top:18px}
+    .kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 16px}
+    .cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+    .btn{display:inline-block;padding:12px 18px;border-radius:10px;border:1px solid var(--border);background:#1a212b;color:var(--text);font-weight:600}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#0b0d10;border:none}
+    .btn-ghost{background:transparent}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .pill{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border:1px solid var(--border);border-radius:999px;color:var(--muted);font-size:12px}
+    .list{display:flex;flex-direction:column;gap:8px}
+    .score{display:inline-flex;gap:6px;align-items:center;padding:6px 10px;border-radius:8px;background:#121821;border:1px solid var(--border)}
+    .score.ok{border-color:#1f3b29}
+    .score.warn{border-color:#3a3520}
+    .score.bad{border-color:#3a1f1f}
+    .section{padding:28px 0}
+    .footer{padding:28px 0;color:var(--muted);border-top:1px solid var(--border);margin-top:24px}
+    @media (max-width:960px){.hero{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="nav">
+      <div class="brand">
+        <strong>Sift Savvy</strong>
+        <span class="badge">Micro-SaaS</span>
+      </div>
+      <div class="badge">Try free: 10 extractions</div>
+    </nav>
+
+    <section class="hero">
+      <div>
+        <h1>Turn Emails Into Qualified B2B Leads — In Minutes</h1>
+        <p class="muted">Contact, company, service need, and an urgency score. Auto-filters newsletters and junk. Export a clean CSV and start outreach. No CRM required.</p>
+        <div class="kpis">
+          <div class="kpi"><strong>3–5 hrs/wk</strong><br><span class="muted">time saved (avg)</span></div>
+          <div class="kpi"><strong>92%</strong><br><span class="muted">noise filtered</span></div>
+          <div class="kpi"><strong>10</strong><br><span class="muted">free extractions</span></div>
+        </div>
+        <div class="cta">
+          <a class="btn btn-primary" href="https://siftsavvy.com" target="_blank" rel="noopener" id="cta_try">Try Free — 10 Extractions</a>
+          <a class="btn btn-ghost" href="#how" id="cta_how">See How It Works</a>
+        </div>
+        <div style="margin-top:12px" class="muted">No credit card for the free tier.</div>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top:0">What you get from one email</h2>
+        <div class="list">
+          <div class="pill">Contact: <strong>Jane Smith</strong> • jane@acme.co</div>
+          <div class="pill">Company: <strong>Acme Logistics</strong></div>
+          <div class="pill">Service Need: <strong>Website revamp & PPC</strong></div>
+          <div class="pill">Context: “Budget approved; kickoff next week.”</div>
+          <div class="score ok">Urgency: <strong>High</strong> — respond today</div>
+        </div>
+        <div class="cta" style="margin-top:16px">
+          <a class="btn" href="https://siftsavvy.com" target="_blank" rel="noopener" id="cta_run_first">Run My First Extraction</a>
+        </div>
+        <p class="muted" style="margin-top:8px">CSV export included. Newsletters/promos auto-ignored.</p>
+      </div>
+    </section>
+
+    <section id="how" class="section">
+      <h2>How it works</h2>
+      <div class="grid-3">
+        <div class="card">
+          <strong>1) Drop email content</strong>
+          <p class="muted">Paste text or upload a file. We parse subject + body only.</p>
+        </div>
+        <div class="card">
+          <strong>2) Extract only what matters</strong>
+          <p class="muted">Contact, company, service need, context, and urgency score.</p>
+        </div>
+        <div class="card">
+          <strong>3) Export & act</strong>
+          <p class="muted">One-click CSV. Prioritize by urgency and start outreach.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Why it’s different</h2>
+      <div class="grid-3">
+        <div class="card">
+          <strong>Focused, not a CRM</strong>
+          <p class="muted">A single job: email → qualified leads you can use now.</p>
+        </div>
+        <div class="card">
+          <strong>Noise filter</strong>
+          <p class="muted">Newsletters, promos, and obvious spam are dropped by default.</p>
+        </div>
+        <div class="card">
+          <strong>Actionable scoring</strong>
+          <p class="muted">High/Medium/Low urgency based on concrete signals in text.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Early results</h2>
+      <div class="grid-3">
+        <div class="card">
+          <em>“I found 24 real leads in under an hour from backlog emails.”</em>
+          <p class="muted">— Freelance PPC</p>
+        </div>
+        <div class="card">
+          <em>“The urgency score was dead-on for who to contact first.”</em>
+          <p class="muted">— Agency owner</p>
+        </div>
+        <div class="card">
+          <em>“CSV export + filters saved me 4 hours in a week.”</em>
+          <p class="muted">— Solo SDR</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Pricing that respects your time</h2>
+      <div class="grid-3">
+        <div class="card">
+          <strong>Free</strong>
+          <p class="muted">10 extractions to validate your workflow. No CC.</p>
+        </div>
+        <div class="card">
+          <strong>Pro — $29/mo</strong>
+          <p class="muted">Unlimited viewing, CSV export, priority processing.</p>
+        </div>
+        <div class="card">
+          <strong>Annual — $313/yr</strong>
+          <p class="muted">2 months free. Best for consistent lead flow.</p>
+        </div>
+      </div>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://siftsavvy.com" target="_blank" rel="noopener" id="cta_pricing">Start Free — 10 Extractions</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>FAQ</h2>
+      <div class="card">
+        <p><strong>Does it store my email?</strong><br><span class="muted">We only process the text you provide for extraction. No inbox connection is required for the free tier.</span></p>
+        <p><strong>What about compliance?</strong><br><span class="muted">You’re responsible for lawful outreach. We filter obvious marketing noise and provide structured data; you control sending.</span></p>
+        <p><strong>Integrations?</strong><br><span class="muted">CSV now. Zapier/Make and webhooks are on deck if enough users request.</span></p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>© <span id="y"></span> Sift Savvy. <a href="https://siftsavvy.com" target="_blank" rel="noopener" id="cta_main_nav">Main app</a> • <a href="#"
+        onclick="alert('Privacy: We process text you submit for extraction. No resale of your data. Contact: support@siftsavvy.com'); track('privacy_view'); return false;">Privacy</a></div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Attach GA4 click events to primary CTAs
+    const map = [
+      { id: 'cta_try', name: 'begin_trial_click', label: 'hero_try_free' },
+      { id: 'cta_how', name: 'nav_click', label: 'see_how' },
+      { id: 'cta_run_first', name: 'begin_trial_click', label: 'card_run_first' },
+      { id: 'cta_pricing', name: 'begin_trial_click', label: 'pricing_try' },
+      { id: 'cta_main_nav', name: 'nav_click', label: 'main_app' },
+    ];
+    map.forEach(({id,name,label})=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.addEventListener('click', () => {
+        track(name, { label, page_location: window.location.href });
+      });
+    });
+
+    // Optional: track UTM presence for debugging
+    (function(){
+      const params = new URLSearchParams(window.location.search);
+      const hasUTM = ['utm_source','utm_medium','utm_campaign'].some(k=>params.has(k));
+      if(hasUTM){ track('landing_utm_hit', Object.fromEntries(params.entries())); }
+    })();
+  </script>
+</body>
+</html>
