@@ -3,20 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow">
   <title>Sift Savvy — Turn Emails Into Qualified B2B Leads</title>
   <meta name="description" content="Extract qualified business leads from emails in minutes. Contact + company + need + urgency score. Filters noise. CSV export. Not a CRM — a focused micro-tool for action." />
 
+  <!-- Favicon / App Icons (place these files at repo root) -->
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="/siftsavvy logo.png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
   <!-- GA4: replace G-XXXXXXXXXX with your Measurement ID -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BCWBVWLCFG"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
+    gtag('config', 'G-BCWBVWLCFG', { send_page_view: true });
 
-    // Pass URL params (including UTM) automatically
-    gtag('config', 'G-XXXXXXXXXX', { send_page_view: true });
-
-    // Helper: track outbound/link/button clicks
     function track(eventName, params={}) {
       if (!window.gtag) return;
       gtag('event', eventName, params);
@@ -25,17 +28,31 @@
 
   <style>
     :root{
-      --bg:#0b0d10; --card:#111418; --muted:#8b95a7; --text:#e7ecf3; --accent:#4da3ff; --accent-2:#6cffc3;
-      --border:#1c232c; --ok:#35c759; --warn:#ffcc00; --bad:#ff453a;
+      /* Light theme */
+      --bg:#ffffff; --card:#ffffff; --text:#0b0d10; --muted:#4b5563;
+      --accent:#4da3ff; --accent-2:#6cffc3; --border:#e5e7eb; --header-bg:#ffffff;
+      --btn-dark:#1a212b;
     }
     *{box-sizing:border-box}
     body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji";}
     a{color:var(--accent);text-decoration:none}
     a:hover{text-decoration:underline}
-    .wrap{max-width:1140px;margin:0 auto;padding:24px}
-    .nav{display:flex;justify-content:space-between;align-items:center;padding:12px 0}
+    .wrap{max-width:1140px;margin:0 auto;padding:16px 24px}
+
+    /* Sticky white header */
+    .site-header{
+      position:sticky; top:0; z-index:1000;
+      background:var(--header-bg);
+      border-bottom:1px solid var(--border);
+      box-shadow:0 4px 12px rgba(0,0,0,.05);
+      backdrop-filter:saturate(180%) blur(8px);
+    }
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:10px 0}
     .brand{display:flex;gap:10px;align-items:center}
-    .badge{font-size:12px;border:1px solid var(--border);padding:4px 8px;border-radius:999px;color:var(--muted)}
+    .logo-img{height:28px;display:block;border-radius:6px}
+    .brand-name{font-weight:700}
+    .badge{font-size:12px;border:1px solid var(--border);padding:4px 8px;border-radius:999px;color:var(--muted);background:var(--card)}
+
     .hero{display:grid;grid-template-columns:1.2fr 1fr;gap:36px;align-items:center;padding:32px 0}
     .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px}
     h1{font-size:40px;line-height:1.1;margin:0 0 12px}
@@ -44,32 +61,42 @@
     .muted{color:var(--muted)}
     .kpis{display:flex;gap:16px;flex-wrap:wrap;margin-top:18px}
     .kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 16px}
+
     .cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
-    .btn{display:inline-block;padding:12px 18px;border-radius:10px;border:1px solid var(--border);background:#1a212b;color:var(--text);font-weight:600}
+    .btn{display:inline-block;padding:12px 18px;border-radius:10px;border:1px solid var(--border);font-weight:600}
     .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#0b0d10;border:none}
-    .btn-ghost{background:transparent}
+    .btn-ghost{background:transparent;color:var(--text)}
+    .btn-dark{background:var(--btn-dark);border-color:var(--btn-dark);color:#fff}
+
     .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
     .pill{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border:1px solid var(--border);border-radius:999px;color:var(--muted);font-size:12px}
     .list{display:flex;flex-direction:column;gap:8px}
-    .score{display:inline-flex;gap:6px;align-items:center;padding:6px 10px;border-radius:8px;background:#121821;border:1px solid var(--border)}
-    .score.ok{border-color:#1f3b29}
-    .score.warn{border-color:#3a3520}
-    .score.bad{border-color:#3a1f1f}
+    .score{display:inline-flex;gap:6px;align-items:center;padding:6px 10px;border-radius:8px;background:#f7f9fc;border:1px solid var(--border)}
+    .score.ok{border-color:#cfe9d7}
+    .score.warn{border-color:#f1e3b8}
+    .score.bad{border-color:#f2c8c4}
     .section{padding:28px 0}
     .footer{padding:28px 0;color:var(--muted);border-top:1px solid var(--border);margin-top:24px}
+
     @media (max-width:960px){.hero{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <nav class="nav">
+  <!-- Sticky white header -->
+  <header class="site-header">
+    <div class="wrap nav">
       <div class="brand">
-        <strong>Sift Savvy</strong>
+        <!-- Replace src with your logo path (transparent preferred). The current file can have black background. -->
+        <img class="logo-img" src="/sift-savvy-logo.png" alt="Sift Savvy logo">
+        <span class="brand-name">Sift Savvy</span>
         <span class="badge">Micro-SaaS</span>
       </div>
       <div class="badge">Try free: 10 extractions</div>
-    </nav>
+    </div>
+  </header>
 
+  <!-- Main content -->
+  <main class="wrap">
     <section class="hero">
       <div>
         <h1>Turn Emails Into Qualified B2B Leads — In Minutes</h1>
@@ -96,7 +123,7 @@
           <div class="score ok">Urgency: <strong>High</strong> — respond today</div>
         </div>
         <div class="cta" style="margin-top:16px">
-          <a class="btn" href="https://siftsavvy.com" target="_blank" rel="noopener" id="cta_run_first">Run My First Extraction</a>
+          <a class="btn btn-dark" href="https://siftsavvy.com" target="_blank" rel="noopener" id="cta_run_first">Run My First Extraction</a>
         </div>
         <p class="muted" style="margin-top:8px">CSV export included. Newsletters/promos auto-ignored.</p>
       </div>
@@ -185,17 +212,16 @@
         <p><strong>Integrations?</strong><br><span class="muted">CSV now. Zapier/Make and webhooks are on deck if enough users request.</span></p>
       </div>
     </section>
+  </main>
 
-    <footer class="footer">
-      <div>© <span id="y"></span> Sift Savvy. <a href="https://siftsavvy.com" target="_blank" rel="noopener" id="cta_main_nav">Main app</a> • <a href="#"
-        onclick="alert('Privacy: We process text you submit for extraction. No resale of your data. Contact: support@siftsavvy.com'); track('privacy_view'); return false;">Privacy</a></div>
-    </footer>
-  </div>
+  <footer class="footer">
+    <div class="wrap">© <span id="y"></span> Sift Savvy. <a href="https://siftsavvy.com" target="_blank" rel="noopener" id="cta_main_nav">Main app</a> • <a href="#"
+      onclick="alert('Privacy: We process text you submit for extraction. No resale of your data. Contact: support@siftsavvy.com'); track('privacy_view'); return false;">Privacy</a></div>
+  </footer>
 
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // Attach GA4 click events to primary CTAs
     const map = [
       { id: 'cta_try', name: 'begin_trial_click', label: 'hero_try_free' },
       { id: 'cta_how', name: 'nav_click', label: 'see_how' },
@@ -211,7 +237,6 @@
       });
     });
 
-    // Optional: track UTM presence for debugging
     (function(){
       const params = new URLSearchParams(window.location.search);
       const hasUTM = ['utm_source','utm_medium','utm_campaign'].some(k=>params.has(k));
