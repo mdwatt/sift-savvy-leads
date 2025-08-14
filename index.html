@@ -103,9 +103,9 @@
   <header class="site-header">
     <div class="wrap nav">
       <div class="brand">
-        <!-- ADDED id + data-new-window so our JS can force a real window when possible -->
+        <!-- CTA 1 -->
         <a id="cta_logo" data-new-window="1"
-           href="https://siftsavvy.com" target="_blank"
+           href="https://siftsavvy.com"
            rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">
           <img class="logo-img" src="/siftsavvy-logo.png" alt="Sift Savvy">
         </a>
@@ -127,8 +127,9 @@
           <div class="kpi"><strong>10</strong><br><span class="muted">free extractions</span></div>
         </div>
         <div class="cta">
+          <!-- CTA 2 -->
           <a class="btn btn-primary" id="cta_try" data-new-window="1"
-             href="https://siftsavvy.com" target="_blank"
+             href="https://siftsavvy.com"
              rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">Try Free — 10 Extractions</a>
           <a class="btn btn-ghost" href="#how" id="cta_how">See How It Works</a>
         </div>
@@ -145,8 +146,9 @@
           <div class="score ok">Urgency: <strong>High</strong> — respond today</div>
         </div>
         <div class="cta" style="margin-top:16px">
+          <!-- CTA 3 -->
           <a class="btn btn-dark" id="cta_run_first" data-new-window="1"
-             href="https://siftsavvy.com" target="_blank"
+             href="https://siftsavvy.com"
              rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">Run My First Extraction</a>
         </div>
         <p class="muted" style="margin-top:8px">CSV export included. Newsletters/promos auto-ignored.</p>
@@ -224,8 +226,9 @@
         </div>
       </div>
       <div class="cta">
+        <!-- CTA 4 -->
         <a class="btn btn-primary" id="cta_pricing" data-new-window="1"
-           href="https://siftsavvy.com" target="_blank"
+           href="https://siftsavvy.com"
            rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">Start Free — 10 Extractions</a>
       </div>
     </section>
@@ -242,8 +245,9 @@
 
   <footer class="footer">
     <div class="wrap">© <span id="y"></span> Sift Savvy.
+      <!-- CTA 5 -->
       <a id="cta_main_nav" data-new-window="1"
-         href="https://siftsavvy.com" target="_blank"
+         href="https://siftsavvy.com"
          rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">Main app</a> •
       <a href="#"
          onclick="alert('Privacy: We process text you submit for extraction. No resale of your data. Contact: support@siftsavvy.com'); track('privacy_view'); return false;">
@@ -285,24 +289,29 @@
         try{
           const isExternal = a.host && a.host !== location.host;
           const wantsNewWindow = a.dataset.newWindow === '1';
+
+          // Only harden external links OR explicit _blank
           if (a.target === '_blank' || isExternal){
             // Always ensure safe rel + referrer policy
             const relSet = new Set((a.getAttribute('rel')||'').split(/\s+/).filter(Boolean));
             relSet.add('noopener'); relSet.add('noreferrer'); relSet.add('nofollow');
             a.setAttribute('rel', Array.from(relSet).join(' '));
             a.setAttribute('referrerpolicy','no-referrer');
-            // Keep target for fallback if popup is blocked
-            if (!a.target) a.target = '_blank';
 
-            // For general links, attach a safety open-once handler.
-            // But SKIP if this anchor is handled by the force-window logic below.
+            // Do NOT auto-add target on CTAs we manage ourselves
+            if (!a.target && !wantsNewWindow) {
+              a.setAttribute('target','_blank');
+            }
+
+            // For general external links, attach a safe open handler once.
+            // Skip CTAs (wantsNewWindow) — they use a different flow.
             if (!wantsNewWindow) {
               a.addEventListener('click', function(e){
                 if (this.href){
                   e.preventDefault();
                   const w = window.open(this.href, '_blank', 'noopener,noreferrer');
                   if (!w) {
-                    // Allow default navigation if blocked
+                    // Fallback to same-tab navigation if blocked
                     window.location.href = this.href;
                   }
                 }
@@ -347,29 +356,36 @@
         const el = document.getElementById(id);
         if (!el) return;
 
-        // Ensure safe attrs (again) + fallback target
+        // Ensure safe attrs (again)
         const relSet = new Set((el.getAttribute('rel')||'').split(/\s+/).filter(Boolean));
         relSet.add('noopener'); relSet.add('noreferrer'); relSet.add('nofollow');
         el.setAttribute('rel', Array.from(relSet).join(' '));
         el.setAttribute('referrerpolicy','no-referrer');
-        if (!el.target) el.target = '_blank';
 
         el.addEventListener('click', function(e){
-          // Try to open a sized, separate window FIRST.
+          // Block default and any other click handlers immediately
+          e.preventDefault();
+          e.stopImmediatePropagation();
+
+          // Ensure no default _blank fallback opens a tab
+          this.removeAttribute('target');
+
           const features = [
             'noopener','noreferrer',
             'resizable=yes','scrollbars=yes',
             'menubar=no','toolbar=no','location=no','status=no',
             centerSpecs(1100, 820)
           ].join(',');
+
           const w = window.open(this.href, 'siftSavvyWin', features);
 
-          // If the browser allowed it, prevent default and focus the new window.
           if (w) {
-            e.preventDefault();
             try { w.focus(); } catch(_e){}
+            return; // success: no extra tab
           }
-          // Else: do NOT prevent default; the anchor's target="_blank" fallback runs (likely a new tab).
+
+          // Fallback if blocked: navigate in current tab (single navigation)
+          window.location.href = this.href;
         });
       }
 
