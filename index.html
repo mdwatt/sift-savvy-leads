@@ -7,9 +7,27 @@
   <title>Sift Savvy — Turn Emails Into Qualified B2B Leads</title>
   <meta name="description" content="Extract qualified business leads from emails in minutes. Contact + company + need + urgency score. Filters noise. CSV export. Not a CRM — a focused micro-tool for action." />
 
+  <!-- Referrer: never send the current URL to other sites -->
+  <meta name="referrer" content="no-referrer">
+  <!-- Security/CSP: tighten navigation + scripts/styles allowed -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self' https://www.googletagmanager.com https://www.google-analytics.com;
+    script-src  'self' https://www.googletagmanager.com 'unsafe-inline';
+    style-src   'self' 'unsafe-inline';
+    img-src     'self' data: https://www.googletagmanager.com https://www.google-analytics.com;
+    connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com;
+    frame-ancestors 'self';
+    base-uri 'self';
+    form-action 'self';
+    object-src 'none';
+    upgrade-insecure-requests;
+    navigate-to 'self' https://siftsavvy.com;
+  ">
+  <!-- Turn off legacy tracking features in some browsers -->
+  <meta http-equiv="Permissions-Policy" content="browsing-topics=(), interest-cohort=()">
+
   <!-- Favicon / App Icons (place these files at repo root) -->
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="icon" type="/siftsavvy-logo.png">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
   <!-- GA4: replace G-XXXXXXXXXX with your Measurement ID -->
@@ -28,7 +46,6 @@
 
   <style>
     :root{
-      /* Light theme */
       --bg:#ffffff; --card:#ffffff; --text:#0b0d10; --muted:#4b5563;
       --accent:#4da3ff; --accent-2:#6cffc3; --border:#e5e7eb; --header-bg:#ffffff;
       --btn-dark:#1a212b;
@@ -73,7 +90,7 @@
     .list{display:flex;flex-direction:column;gap:8px}
     .score{display:inline-flex;gap:6px;align-items:center;padding:6px 10px;border-radius:8px;background:#f7f9fc;border:1px solid var(--border)}
     .score.ok{border-color:#cfe9d7}
-    .score.warn{border-color:#f1e3b8}
+    .core.warn{border-color:#f1e3b8}
     .score.bad{border-color:#f2c8c4}
     .section{padding:28px 0}
     .footer{padding:28px 0;color:var(--muted);border-top:1px solid var(--border);margin-top:24px}
@@ -86,12 +103,9 @@
   <header class="site-header">
     <div class="wrap nav">
       <div class="brand">
-        <!-- Replace src with your logo path (transparent preferred). The current file can have black background. -->
-        <a href="https://siftsavvy.com" target="_blank" rel="noopener noreferrer">
-        <img class="logo-img" src="/siftsavvy-logo.png" alt="Sift Savvy"></a>
-        <!--
-		<span class="brand-name">Sift Savvy</span>
-		-->
+        <a href="https://siftsavvy.com" target="_blank" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">
+          <img class="logo-img" src="/siftsavvy-logo.png" alt="Sift Savvy">
+        </a>
         <span class="badge">Micro-SaaS</span>
       </div>
       <div class="badge">Try free: 10 extractions</div>
@@ -110,7 +124,7 @@
           <div class="kpi"><strong>10</strong><br><span class="muted">free extractions</span></div>
         </div>
         <div class="cta">
-          <a class="btn btn-primary" href="https://siftsavvy.com" target="_blank" rel="noopener" id="cta_try">Try Free — 10 Extractions</a>
+          <a class="btn btn-primary" href="https://siftsavvy.com" target="_blank" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer" id="cta_try">Try Free — 10 Extractions</a>
           <a class="btn btn-ghost" href="#how" id="cta_how">See How It Works</a>
         </div>
         <div style="margin-top:12px" class="muted">No credit card for the free tier.</div>
@@ -126,7 +140,7 @@
           <div class="score ok">Urgency: <strong>High</strong> — respond today</div>
         </div>
         <div class="cta" style="margin-top:16px">
-          <a class="btn btn-dark" href="https://siftsavvy.com" target="_blank" rel="noopener" id="cta_run_first">Run My First Extraction</a>
+          <a class="btn btn-dark" href="https://siftsavvy.com" target="_blank" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer" id="cta_run_first">Run My First Extraction</a>
         </div>
         <p class="muted" style="margin-top:8px">CSV export included. Newsletters/promos auto-ignored.</p>
       </div>
@@ -203,7 +217,7 @@
         </div>
       </div>
       <div class="cta">
-        <a class="btn btn-primary" href="https://siftsavvy.com" target="_blank" rel="noopener" id="cta_pricing">Start Free — 10 Extractions</a>
+        <a class="btn btn-primary" href="https://siftsavvy.com" target="_blank" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer" id="cta_pricing">Start Free — 10 Extractions</a>
       </div>
     </section>
 
@@ -218,13 +232,22 @@
   </main>
 
   <footer class="footer">
-    <div class="wrap">© <span id="y"></span> Sift Savvy. <a href="https://siftsavvy.com" target="_blank" rel="noopener" id="cta_main_nav">Main app</a> • <a href="#"
-      onclick="alert('Privacy: We process text you submit for extraction. No resale of your data. Contact: support@siftsavvy.com'); track('privacy_view'); return false;">Privacy</a></div>
+    <div class="wrap">© <span id="y"></span> Sift Savvy. 
+      <a href="https://siftsavvy.com" target="_blank" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer" id="cta_main_nav">Main app</a> • 
+      <a href="#"
+         onclick="alert('Privacy: We process text you submit for extraction. No resale of your data. Contact: support@siftsavvy.com'); track('privacy_view'); return false;">
+         Privacy</a>
+    </div>
   </footer>
 
+  <!-- Harden links via external script (keeps this file clean) -->
+  <script src="/secure-links.js" defer></script>
+
   <script>
+    // Year
     document.getElementById('y').textContent = new Date().getFullYear();
 
+    // Analytics bindings
     const map = [
       { id: 'cta_try', name: 'begin_trial_click', label: 'hero_try_free' },
       { id: 'cta_how', name: 'nav_click', label: 'see_how' },
@@ -240,6 +263,7 @@
       });
     });
 
+    // UTM tracking
     (function(){
       const params = new URLSearchParams(window.location.search);
       const hasUTM = ['utm_source','utm_medium','utm_campaign'].some(k=>params.has(k));
