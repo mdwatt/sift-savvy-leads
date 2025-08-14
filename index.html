@@ -283,49 +283,21 @@
       if(hasUTM){ track('landing_utm_hit', Object.fromEntries(params.entries())); }
     })();
 
-    // ==== HARDEN ALL LINKS (prevent opener/referrer leaks) ====
+    // ==== HARDEN LINKS (security only; NO click handlers, NO target changes) ====
     (function hardenLinks(){
       function secureAnchor(a){
         try{
           const isExternal = a.host && a.host !== location.host;
-          const wantsNewWindow = a.dataset.newWindow === '1';
-
-          // Only harden external links OR explicit _blank
           if (a.target === '_blank' || isExternal){
-            // Always ensure safe rel + referrer policy
             const relSet = new Set((a.getAttribute('rel')||'').split(/\s+/).filter(Boolean));
             relSet.add('noopener'); relSet.add('noreferrer'); relSet.add('nofollow');
             a.setAttribute('rel', Array.from(relSet).join(' '));
             a.setAttribute('referrerpolicy','no-referrer');
-
-            // Do NOT auto-add target on CTAs we manage ourselves
-            if (!a.target && !wantsNewWindow) {
-              a.setAttribute('target','_blank');
-            }
-
-            // For general external links, attach a safe open handler once.
-            // Skip CTAs (wantsNewWindow) — they use a different flow.
-            if (!wantsNewWindow) {
-              a.addEventListener('click', function(e){
-                if (this.href){
-                  e.preventDefault();
-                  const w = window.open(this.href, '_blank', 'noopener,noreferrer');
-                  if (!w) {
-                    // Fallback to same-tab navigation if blocked
-                    window.location.href = this.href;
-                  }
-                }
-              }, { once:true });
-            }
           }
         }catch(_e){}
       }
-
-      // Initial pass
       document.querySelectorAll('a[href]').forEach(secureAnchor);
-
-      // Future/injected links
-      const mo = new MutationObserver(muts=>{
+      new MutationObserver(muts=>{
         for (const m of muts){
           for (const n of m.addedNodes){
             if (n.nodeType === 1){
@@ -334,12 +306,14 @@
             }
           }
         }
-      });
-      mo.observe(document.documentElement, { childList:true, subtree:true });
+      }).observe(document.documentElement, { childList:true, subtree:true });
     })();
 
-    // ==== BEST-EFFORT "OPEN AS SEPARATE WINDOW" FOR SPECIFIC LINKS ====
+    // ==== FORCE SEPARATE WINDOW FOR CTAs (single open, no extra tab) ====
     (function forceRealWindowForCTAs(){
+      // Remove any target attributes proactively on all managed CTAs
+      document.querySelectorAll('[data-new-window="1"]').forEach(a => a.removeAttribute('target'));
+
       function centerSpecs(w=1100, h=820){
         try{
           const aw = window.screen.availWidth || window.innerWidth || 1280;
@@ -352,41 +326,50 @@
         }
       }
 
-      function enhance(id){
-        const el = document.getElementById(id);
-        if (!el) return;
-
-        // Ensure safe attrs (again)
-        const relSet = new Set((el.getAttribute('rel')||'').split(/\s+/).filter(Boolean));
-        relSet.add('noopener'); relSet.add('noreferrer'); relSet.add('nofollow');
-        el.setAttribute('rel', Array.from(relSet).join(' '));
-        el.setAttribute('referrerpolicy','no-referrer');
-
-        el.addEventListener('click', function(e){
-          // Block default and any other click handlers immediately
+      function handlerFactory(el){
+        return function(e){
+          // Cancel everything early
           e.preventDefault();
+          e.stopPropagation();
           e.stopImmediatePropagation();
 
-          // Ensure no default _blank fallback opens a tab
-          this.removeAttribute('target');
+          // Ensure no default _blank behavior
+          el.removeAttribute('target');
 
           const features = [
-            'noopener','noreferrer',
             'resizable=yes','scrollbars=yes',
             'menubar=no','toolbar=no','location=no','status=no',
             centerSpecs(1100, 820)
           ].join(',');
 
-          const w = window.open(this.href, 'siftSavvyWin', features);
+          const w = window.open(el.href, 'siftSavvyWin', features);
 
           if (w) {
-            try { w.focus(); } catch(_e){}
-            return; // success: no extra tab
+            try { w.opener = null; w.focus(); } catch(_){}
+            return; // success: only one window
           }
 
-          // Fallback if blocked: navigate in current tab (single navigation)
-          window.location.href = this.href;
-        });
+          // Popup blocked: single fallback (same tab), not a new tab.
+          window.location.href = el.href;
+        };
+      }
+
+      function enhance(id){
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        // Security attributes (again)
+        const relSet = new Set((el.getAttribute('rel')||'').split(/\s+/).filter(Boolean));
+        relSet.add('noopener'); relSet.add('noreferrer'); relSet.add('nofollow');
+        el.setAttribute('rel', Array.from(relSet).join(' '));
+        el.setAttribute('referrerpolicy','no-referrer');
+
+        const handler = handlerFactory(el);
+
+        // Capture-phase to beat any other listeners
+        el.addEventListener('click', handler, { capture:true });
+        // Also handle middle-click (auxclick) to avoid browser opening a new tab
+        el.addEventListener('auxclick', handler, { capture:true });
       }
 
       ['cta_logo','cta_try','cta_run_first','cta_pricing','cta_main_nav'].forEach(enhance);
