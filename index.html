@@ -240,9 +240,6 @@
     </div>
   </footer>
 
-  <!-- Harden links via external script (keeps this file clean) -->
-  <script src="./secure-links.js" defer></script>
-
   <script>
     // Year
     document.getElementById('y').textContent = new Date().getFullYear();
@@ -268,6 +265,48 @@
       const params = new URLSearchParams(window.location.search);
       const hasUTM = ['utm_source','utm_medium','utm_campaign'].some(k=>params.has(k));
       if(hasUTM){ track('landing_utm_hit', Object.fromEntries(params.entries())); }
+    })();
+
+    // ==== HARDEN ALL LINKS (prevent opener/referrer leaks) ====
+    (function hardenLinks(){
+      function secureAnchor(a){
+        try{
+          const isExternal = a.host && a.host !== location.host;
+          if (a.target === '_blank' || isExternal){
+            // Ensure rel includes both noopener and noreferrer (and nofollow for good measure)
+            const relSet = new Set((a.getAttribute('rel')||'').split(/\s+/).filter(Boolean));
+            relSet.add('noopener'); relSet.add('noreferrer'); relSet.add('nofollow');
+            a.setAttribute('rel', Array.from(relSet).join(' '));
+
+            // Ensure no referrer is sent
+            a.setAttribute('referrerpolicy','no-referrer');
+
+            // Force window.open with secure features — prevents opener access
+            a.addEventListener('click', function(e){
+              if (this.href){
+                e.preventDefault();
+                window.open(this.href, '_blank', 'noopener,noreferrer');
+              }
+            }, { once:true });
+          }
+        }catch(_e){}
+      }
+
+      // Initial pass
+      document.querySelectorAll('a[href]').forEach(secureAnchor);
+
+      // Future/injected links
+      const mo = new MutationObserver(muts=>{
+        for (const m of muts){
+          for (const n of m.addedNodes){
+            if (n.nodeType === 1){
+              if (n.tagName === 'A' && n.href) secureAnchor(n);
+              n.querySelectorAll && n.querySelectorAll('a[href]').forEach(secureAnchor);
+            }
+          }
+        }
+      });
+      mo.observe(document.documentElement, { childList:true, subtree:true });
     })();
   </script>
 </body>
