@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-987325341"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-987325341');
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-987325341"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-987325341');
+  </script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="robots" content="noindex,nofollow">
@@ -53,7 +52,7 @@
     :root{
       --bg:#ffffff; --card:#ffffff; --text:#0b0d10; --muted:#4b5563;
       --accent:#4da3ff; --accent-2:#6cffc3; --border:#e5e7eb; --header-bg:#ffffff;
-      --btn-dark:#1a212b;
+      --btn-dark:#1a212b; --overlay: rgba(11,13,16,.6);
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -112,10 +111,31 @@
       box-shadow:0 8px 20px rgba(0,0,0,.15);
     }
 
-    @media (max-width:960px){
-      .hero{grid-template-columns:1fr}
-      .grid-3{grid-template-columns:1fr}
+    /* === FAKE DOOR MODAL === */
+    .fd-overlay{
+      position:fixed; inset:0; background:var(--overlay);
+      display:none; align-items:center; justify-content:center; z-index:2000;
+      padding:24px;
     }
+    .fd-modal{
+      width:min(680px, 96vw); background:#fff; color:#0b0d10; border-radius:16px; border:1px solid #e5e7eb;
+      box-shadow:0 30px 80px rgba(0,0,0,.25);
+      overflow:hidden;
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial;
+    }
+    .fd-head{
+      padding:18px 20px; border-bottom:1px solid #e5e7eb; display:flex; align-items:center; justify-content:space-between;
+    }
+    .fd-title{font-size:18px; font-weight:700}
+    .fd-close{border:none; background:transparent; font-size:22px; cursor:pointer; line-height:1}
+    .fd-body{padding:20px}
+    .fd-note{color:#4b5563; margin-top:8px}
+    .fd-cta{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
+    .fd-btn{padding:10px 14px; border-radius:10px; border:1px solid #e5e7eb; background:#111418; color:#fff; cursor:pointer; font-weight:600}
+    .fd-btn.secondary{background:#fff; color:#0b0d10}
+    .fd-small{font-size:12px; color:#6b7280}
+    .fd-bullet{margin:0; padding-left:18px; color:#111827}
+    .fd-bullet li{margin:6px 0}
   </style>
 </head>
 <body id="top">
@@ -297,6 +317,33 @@
   <!-- Back to top button -->
   <button id="backToTop" class="btn btn-dark" aria-label="Back to top" title="Back to top">↑ Top</button>
 
+  <!-- === FAKE DOOR MODAL (Early Access) === -->
+  <div class="fd-overlay" id="fd_overlay" role="dialog" aria-modal="true" aria-labelledby="fd_title" aria-hidden="true">
+    <div class="fd-modal">
+      <div class="fd-head">
+        <div class="fd-title" id="fd_title">Early Access — Limited Capacity</div>
+        <button class="fd-close" id="fd_close" aria-label="Close">×</button>
+      </div>
+      <div class="fd-body">
+        <p><strong>We’re currently onboarding in small batches.</strong> We can manually onboard <strong>5 users this week</strong> with white-glove setup.</p>
+        <p class="fd-note">No calls required. Pick an option below to keep moving:</p>
+        <ul class="fd-bullet">
+          <li><strong>Watch a 2-minute demo</strong> to see exactly how it works.</li>
+          <li><strong>Request Early Access</strong> and we’ll set you up manually.</li>
+        </ul>
+
+        <div class="fd-cta">
+          <a class="fd-btn" id="fd_demo" href="/assets/leads-hero-10s.mp4" target="_blank" rel="noopener">Watch 2-min Demo</a>
+          <a class="fd-btn secondary" id="fd_request"
+             href="mailto:support@siftsavvy.com?subject=Early%20Access%20Request&body=Hi%20Sift%20Savvy%20team%2C%0A%0AI'd%20like%20early%20access.%20My%20use%20case%3A%20%5Bbriefly%5D.%20Volume%2Fweek%3A%20%5Bxx%5D.%0A%0AThanks!"
+             >Request Early Access</a>
+          <button class="fd-btn secondary" id="fd_continue">Continue to Dashboard</button>
+        </div>
+        <div class="fd-small" style="margin-top:10px">This helps us validate demand and prioritize features. Thanks for the signal.</div>
+      </div>
+    </div>
+  </div>
+
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
 
@@ -334,6 +381,49 @@
       }).observe(document.documentElement, { childList:true, subtree:true });
     })();
 
+    // === FAKE DOOR INTERCEPT (runs before window-opener) ===
+    (function fakeDoor(){
+      const overlay = document.getElementById('fd_overlay');
+      const closeBtn = document.getElementById('fd_close');
+      const demoBtn  = document.getElementById('fd_demo');
+      const reqBtn   = document.getElementById('fd_request');
+      const contBtn  = document.getElementById('fd_continue');
+
+      function openFD(){
+        overlay.style.display = 'flex';
+        overlay.setAttribute('aria-hidden', 'false');
+        track('fake_door_show');
+      }
+      function closeFD(){
+        overlay.style.display = 'none';
+        overlay.setAttribute('aria-hidden', 'true');
+      }
+      closeBtn.addEventListener('click', closeFD);
+      overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeFD(); });
+
+      demoBtn.addEventListener('click', ()=> track('fake_door_demo_click'));
+      reqBtn.addEventListener('click',  ()=> track('fake_door_request_access'));
+
+      // Intercept these CTAs to show the fake door first
+      ['cta_try','cta_run_first','cta_pricing'].forEach(id=>{
+        const el = document.getElementById(id);
+        if(!el) return;
+        el.addEventListener('click', function(e){
+          // SHOW MODAL instead of immediate navigation
+          e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+          openFD();
+        }, { capture:true });
+      });
+
+      // Allow continue → actually navigate to dashboard (respects your original href target)
+      contBtn.addEventListener('click', ()=>{
+        closeFD();
+        track('fake_door_continue');
+        // default path to main app (same as CTAs), adjust if needed
+        window.open('https://siftsavvy.com', 'siftsavvy_cta_win');
+      });
+    })();
+
     (function forceRealWindowForCTAs(){
       document.querySelectorAll('[data-new-window="1"]').forEach(a => a.removeAttribute('target'));
       function centerSpecs(w=1100, h=820){
@@ -347,8 +437,11 @@
       }
       function handlerFactory(el){
         return function(e){
+          // If fake door showed a modal, we already prevented default in capture phase; skip
+          if (document.getElementById('fd_overlay').style.display === 'flex') return;
+
           e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
-        try{ el.removeAttribute('target'); }catch(_e){}
+          try{ el.removeAttribute('target'); }catch(_e){}
           const href = el.getAttribute('href'); if(!href) return;
           const name = 'siftsavvy_cta_win';
           const win = window.open(href, name, centerSpecs());
