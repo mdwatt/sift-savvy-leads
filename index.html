@@ -1,12 +1,19 @@
 <!doctype html>
 <html lang="en">
 <head>
-<!-- Reddit Pixel -->
-<script>
-!function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);rdt('init','a2_hcf7enfw17xs');rdt('track', 'PageVisit');
-</script>
-<!-- DO NOT MODIFY UNLESS TO REPLACE A USER IDENTIFIER -->
-<!-- End Reddit Pixel -->
+<head>
+  <!-- Reddit Pixel: place high in <head> -->
+  <script>
+  !function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];
+  var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js";t.async=!0;
+  var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);
+  rdt('init','a2_hcf7enfw17xs');   // <-- your Pixel ID goes here
+  rdt('track','PageVisit');         // auto fires page visit
+  </script>
+  <!-- End Reddit Pixel -->
+  ...
+</head>
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-987325341"></script>
   <script>
@@ -483,6 +490,7 @@ Webhook API — auto-ingest leads from your flows; rotate/regenerate keys anytim
   </script>
 </body>
 </html>
+
 
 
 
