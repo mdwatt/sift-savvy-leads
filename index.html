@@ -1,20 +1,17 @@
 <!doctype html>
 <html lang="en">
 <head>
-<head>
   <!-- Reddit Pixel: place high in <head> -->
   <script>
   !function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];
   var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js";t.async=!0;
   var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);
-  rdt('init','a2_hcf7enfw17xs');   // <-- your Pixel ID goes here
-  rdt('track','PageVisit');         // auto fires page visit
+  rdt('init','a2_hcf7enfw17xs');
+  rdt('track','PageVisit');
   </script>
   <!-- End Reddit Pixel -->
-  ...
-</head>
 
-  <!-- Google tag (gtag.js) -->
+  <!-- Google Ads tag -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-987325341"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -22,22 +19,21 @@
     gtag('js', new Date());
     gtag('config', 'AW-987325341');
   </script>
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="robots" content="noindex,nofollow">
-  <title>AI Inbound eMail Lead Extraction | Sift Savvy</title>
-  <meta name="description" content="Turn email inquiries into qualified leads instantly with our AI-powered inbound lead management platform. No CRM needed. Try free!">
-  <meta name="keywords" content="AI inbound mail lead extraction management software for emails, automated inbound lead qualification using AI, inbound lead management tools without CRM, real-time inbound lead scoring from emails, handle urgent inbound leads in email inbox, free tools for inbound lead management automation, AI-powered inbound lead management platform">
-  <meta name="description" content="Turn Inbound Inquiries into Qualified Leads Instantly.We don't scrape—we analyze what prospects already sent you. Turn inbound inquiries into qualified leads instantly. Paste or upload emails, extract contact/company/request/context. Pro adds AI urgency detection and advanced scoring. CSV export. Not a CRM." />
-  <!-- In https://land.siftsavvy.com head -->
+  <title>Turn Inbound Inquiries into Qualified Leads Instantly | Sift Savvy</title>
+  <meta name="description" content="We don't scrape—we analyze what prospects already sent you. Paste or upload emails to extract contact, company, request, and context you can act on. Pro adds AI urgency detection. CSV export. No CRM required.">
+
+  <!-- Open Graph -->
   <meta property="og:title" content="Sift Savvy: AI-Powered Email Lead Extractor" />
   <meta property="og:description" content="Extract leads from emails in seconds with AI. Try free for 10 leads/month!" />
-  <meta property="og:image" content="https://land.siftsavvy.com/thumbnail.jpg" />
-  <meta property="og:url" content="https://land.siftsavvy.com" />
-  
-  <!-- Referrer: never send the current URL to other sites -->
+  <meta property="og:image" content="https://leads.siftsavvy.com/thumbnail.jpg" />
+  <meta property="og:url" content="https://leads.siftsavvy.com" />
+
+  <!-- Referrer / CSP -->
   <meta name="referrer" content="no-referrer">
-  <!-- Security/CSP -->
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self' https://www.googletagmanager.com https://www.google-analytics.com;
     script-src  'self' https://www.googletagmanager.com 'unsafe-inline';
@@ -49,8 +45,7 @@
     form-action 'self';
     object-src 'none';
     upgrade-insecure-requests;
-    navigate-to 'self' https://siftsavvy.com;
-  ">
+    navigate-to 'self' https://siftsavvy.com;">
   <meta http-equiv="Permissions-Policy" content="browsing-topics=(), interest-cohort=()">
 
   <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any">
@@ -85,9 +80,12 @@
     .logo-img{height:28px;display:block;border-radius:6px}
 
     .badge{font-size:12px;border:1px solid var(--border);padding:4px 8px;border-radius:999px;color:var(--muted)}
-    /* TOP-ALIGN HERO COLUMNS */
-    .hero{display:grid;grid-template-columns:1.2fr 1fr;gap:36px;align-items:start;padding:32px 0}
-    .hero > *{align-self:start}
+
+    /* HERO: clearer reading order + labels */
+    .hero{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:start;padding:32px 0}
+    .eyebrow{display:inline-block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:4px 10px;border-radius:999px;margin-bottom:10px}
+    .hero-left .eyebrow{background:#f8fafc}
+    .hero-right .eyebrow{background:#f0f9ff}
     .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px}
     h1{font-size:40px;line-height:1.1;margin:0 0 12px}
     h2{font-size:28px;margin:24px 0 12px}
@@ -112,12 +110,12 @@
     .section{padding:28px 0}
     .footer{padding:28px 0;color:var(--muted);border-top:1px solid var(--border);margin-top:24px}
 
-    /* right column video */
+    /* video */
     .hero-right{display:flex;flex-direction:column;gap:12px}
     .video-box{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.12);border:1px solid var(--border);background:#000}
     .video-box video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 
-    /* back-to-top button */
+    /* back-to-top */
     #backToTop{
       position:fixed;
       right:calc(24px + env(safe-area-inset-right));
@@ -129,21 +127,10 @@
       box-shadow:0 8px 20px rgba(0,0,0,.15);
     }
 
-    /* === FAKE DOOR MODAL === */
-    .fd-overlay{
-      position:fixed; inset:0; background:var(--overlay);
-      display:none; align-items:center; justify-content:center; z-index:2000;
-      padding:24px;
-    }
-    .fd-modal{
-      width:min(680px, 96vw); background:#fff; color:#0b0d10; border-radius:16px; border:1px solid #e5e7eb;
-      box-shadow:0 30px 80px rgba(0,0,0,.25);
-      overflow:hidden;
-      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial;
-    }
-    .fd-head{
-      padding:18px 20px; border-bottom:1px solid #e5e7eb; display:flex; align-items:center; justify-content:space-between;
-    }
+    /* fake door modal */
+    .fd-overlay{position:fixed; inset:0; background:var(--overlay); display:none; align-items:center; justify-content:center; z-index:2000; padding:24px;}
+    .fd-modal{width:min(680px, 96vw); background:#fff; color:#0b0d10; border-radius:16px; border:1px solid #e5e7eb; box-shadow:0 30px 80px rgba(0,0,0,.25); overflow:hidden;}
+    .fd-head{padding:18px 20px; border-bottom:1px solid #e5e7eb; display:flex; align-items:center; justify-content:space-between;}
     .fd-title{font-size:18px; font-weight:700}
     .fd-close{border:none; background:transparent; font-size:22px; cursor:pointer; line-height:1}
     .fd-body{padding:20px}
@@ -154,6 +141,10 @@
     .fd-small{font-size:12px; color:#6b7280}
     .fd-bullet{margin:0; padding-left:18px; color:#111827}
     .fd-bullet li{margin:6px 0}
+
+    @media (max-width:1024px){
+      .hero{grid-template-columns:1fr; gap:18px}
+    }
   </style>
 </head>
 <body id="top">
@@ -171,7 +162,9 @@
 
   <div class="wrap">
     <section class="hero">
-      <div>
+      <!-- LEFT: clear starting point -->
+      <div class="hero-left">
+        <div class="eyebrow">Start here</div>
         <h1>Turn Inbound Inquiries into Qualified Leads Instantly</h1>
         <p class="muted" style="margin-top:6px;"><em>Inbound Lead Magic:</em> Find urgent opportunities hidden in your inbox.</p>
         <p class="muted"><strong>We don't scrape — we analyze what prospects already sent you.</strong></p>
@@ -187,31 +180,27 @@
           <a class="btn btn-primary" id="cta_try" data-new-window="1" href="https://siftsavvy.com" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">Try Free — 10 Extractions</a>
           <a class="btn btn-ghost" href="#how" id="cta_how">See How It Works</a>
         </div>
-        <div style="margin-top:12px" class="muted">No credit card for the free tier. </br></br><a href="https://www.producthunt.com/products/sift-savvy?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-sift-savvy"
-   target="_blank" rel="noopener noreferrer" aria-label="Find us on Product Hunt">
-  <img src="assets/product-hunt-button.png"
-       alt="Sift Savvy on Product Hunt"
-       width="250" height="54"
-       style="width:250px;height:54px;display:inline-block;border:0;"></a></div>
+        <div style="margin-top:12px" class="muted">
+          No credit card for the free tier. <br><br>
+          <a href="https://www.producthunt.com/products/sift-savvy?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-sift-savvy"
+             target="_blank" rel="noopener noreferrer" aria-label="Find us on Product Hunt">
+            <img src="assets/product-hunt-button.png" alt="Sift Savvy on Product Hunt" width="250" height="54" style="width:250px;height:54px;display:inline-block;border:0;">
+          </a>
+        </div>
       </div>
 
-      <!-- RIGHT: video + original card -->
+      <!-- RIGHT: demo clearly second -->
       <div class="hero-right">
+        <div class="eyebrow">Watch 1-min demo</div>
         <div class="video-box" aria-label="Sift Savvy — emails transforming into structured leads">
-          <video
-            autoplay
-            muted
-            playsinline
-            loop
-            preload="none"
-            poster="/assets/hero-poster.png">
-            <source src="/assets/leads-hero-10s.mp4" type="video/mp4">
+          <video autoplay muted playsinline loop preload="none" poster="/assets/hero-poster.png">
+            <source src="/assets/Sift Savvy - Lead Extraction Platform Demo.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
         </div>
 
-        <div class="card">
-          <h2 style="margin-top:0">What you get from one email</h2>
+        <div class="card" aria-labelledby="example_email_output">
+          <h2 id="example_email_output" style="margin-top:0">What you get from one email</h2>
           <div class="list">
             <div class="pill">Contact: <strong>Jane Smith</strong> • jane@acme.co</div>
             <div class="pill">Company: <strong>Acme Logistics</strong></div>
@@ -232,63 +221,60 @@
       <div class="grid-3">
         <div class="card">
           <strong>1) Paste or upload</strong>
-          <p class="muted">Inbound lead management tools without CRM. Drop email text or a file. We process subject + body only.</p>
+          <p class="muted">Drop email text or a file. We process subject + body only.</p>
         </div>
         <div class="card">
           <strong>2) Extract only what matters</strong>
-          <p class="muted">Using automated inbound lead qualification using AI, we score leads in real-time, flagging urgent opportunities so you never miss a hot prospect. <em>Pro</em> adds AI urgency detection.</p>
+          <p class="muted">Contact, company, request, brief context. <em>Pro</em> adds AI urgency detection.</p>
         </div>
         <div class="card">
           <strong>3) Export & act</strong>
-          <p class="muted">One-click CSV. Prioritize  leads with real-time inbound lead scoring from emails, saving hours of manual sorting, (Pro) and start outreach immediately.</p>
+          <p class="muted">One-click CSV. Prioritize (Pro) and start outreach immediately.</p>
         </div>
       </div>
     </section>
 
-    <!-- NEW: Zapier Automation section (for all users' dashboards) -->
+    <!-- Automation -->
     <section class="section" id="automation">
       <h2>Automation (New)</h2>
       <div class="card">
         <p><strong>Zapier Automation — now in all users’ dashboards.</strong></p>
-        <p class="muted">Automatically process emails from your favorite email platforms through Zapier triggers (e.g., Gmail labels, Outlook events). Send matched messages straight to extraction—hands off.</p>
+        <p class="muted">Automatically process emails from Gmail/Outlook triggers. Send matched messages straight to extraction—hands off.</p>
         <div class="cta">
           <a class="btn" id="cta_zapier" data-new-window="1" href="https://siftsavvy.com" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">Open Dashboard</a>
         </div>
       </div>
     </section>
 
-    <section class="section">
-      <h2>Why it’s different</h2>
+    <!-- Proof & results (verifiable) -->
+    <section class="section" id="proof">
+      <h2>Proof & Transparency</h2>
       <div class="grid-3">
         <div class="card">
-          <strong>Focused, not a CRM</strong>
-          <p class="muted">A single job: inbound email → qualified leads you can use now.</p>
+          <strong>Live demo (1 min)</strong>
+          <p class="muted">See an inbox message transform into a structured lead with contact, company, request, and context.</p>
+          <div class="cta">
+            <a class="btn" href="/assets/Sift Savvy - Lead Extraction Platform Demo.mp4" target="_blank" rel="noopener">Watch demo</a>
+          </div>
+          <p class="muted" style="margin-top:8px">Recorded: <time datetime="2025-08-12">Aug 12, 2025</time></p>
         </div>
-        <div class="card">
-          <strong>Intelligent analysis</strong>
-          <p class="muted">We don’t scrape lists — we analyze what prospects already sent you.</p>
-        </div>
-        <div class="card">
-          <strong>Actionable scoring (Pro)</strong>
-          <p class="muted">AI urgency detection highlights who to contact first.</p>
-        </div>
-      </div>
-    </section>
 
-    <section class="section">
-      <h2>Early results</h2>
-      <div class="grid-3">
         <div class="card">
-          <em>“I found 24 real leads in under an hour from backlog emails.”</em>
-          <p class="muted">— Freelance PPC</p>
+          <strong>Sample output (CSV)</strong>
+          <p class="muted">Download a sanitized 10-row CSV generated from real email text so you can inspect fields and formatting.</p>
+          <div class="cta">
+            <a class="btn" href="/assets/sample-output.csv" target="_blank" rel="noopener">Download CSV</a>
+          </div>
+          <p class="muted" style="margin-top:8px">Includes: contact, company, request, context. No personal data.</p>
         </div>
+
         <div class="card">
-          <em>“The priority flag was dead-on for who to contact first.”</em>
-          <p class="muted">— Agency owner</p>
-        </div>
-        <div class="card">
-          <em>“CSV export + filters saved me 4 hours in a week.”</em>
-          <p class="muted">— Solo SDR</p>
+          <strong>Public listing (Product Hunt)</strong>
+          <p class="muted">See public comments and feedback about Sift Savvy from the community.</p>
+          <div class="cta">
+            <a class="btn" href="https://www.producthunt.com/products/sift-savvy?utm_source=landing&utm_medium=proof_card" target="_blank" rel="noopener">View on Product Hunt</a>
+          </div>
+          <p class="muted" style="margin-top:8px">We link to external feedback to keep things honest.</p>
         </div>
       </div>
     </section>
@@ -298,7 +284,7 @@
       <div class="grid-3">
         <div class="card">
           <strong>Free</strong>
-          <p class="muted">10 extractions to validate your workflow. CSV export. Multiple input methods. <u>No AI urgency.</u></p>
+          <p class="muted">10 extractions to validate your workflow. CSV export. <u>No AI urgency.</u></p>
         </div>
         <div class="card">
           <strong>Pro — $29/mo</strong>
@@ -306,7 +292,7 @@
         </div>
         <div class="card">
           <strong>Annual — $313/yr</strong>
-          <p class="muted">All Pro features also with multiple input methods and 2 months free.</p>
+          <p class="muted">All Pro features with 2 months free.</p>
         </div>
       </div>
       <div class="cta">
@@ -336,10 +322,10 @@
     </div>
   </footer>
 
-  <!-- Back to top button -->
+  <!-- Back to top -->
   <button id="backToTop" class="btn btn-dark" aria-label="Back to top" title="Back to top">↑ Top</button>
 
-  <!-- === FAKE DOOR MODAL (Early Access) === -->
+  <!-- Early Access (Fake Door) -->
   <div class="fd-overlay" id="fd_overlay" role="dialog" aria-modal="true" aria-labelledby="fd_title" aria-hidden="true">
     <div class="fd-modal">
       <div class="fd-head">
@@ -357,8 +343,7 @@
         <div class="fd-cta">
           <a class="fd-btn" id="fd_demo" href="/assets/Sift Savvy - Lead Extraction Platform Demo.mp4" target="_blank" rel="noopener">Watch 1-min Demo</a>
           <a class="fd-btn secondary" id="fd_request"
-             href="mailto:support@siftsavvy.com?subject=Early%20Access%20Request&body=Hi%20Sift%20Savvy%20team%2C%0A%0AI'd%20like%20early%20access.%20My%20use%20case%3A%20%5Bbriefly%5D.%20Volume%2Fweek%3A%20%5Bxx%5D.%0A%0AThanks!"
-             >Request Early Access</a>
+             href="mailto:support@siftsavvy.com?subject=Early%20Access%20Request&body=Hi%20Sift%20Savvy%20team%2C%0A%0AI'd%20like%20early%20access.%20My%20use%20case%3A%20%5Bbriefly%5D.%20Volume%2Fweek%3A%20%5Bxx%5D.%0A%0AThanks!">Request Early Access</a>
           <button class="fd-btn secondary" id="fd_continue">Continue to Dashboard</button>
         </div>
         <div class="fd-small" style="margin-top:10px">This helps us validate demand and prioritize features. Thanks for the signal.</div>
@@ -381,9 +366,7 @@
     map.forEach(({id,name,label})=>{
       const el = document.getElementById(id);
       if(!el) return;
-      el.addEventListener('click', () => {
-        track(name, { label, page_location: window.location.href });
-      });
+      el.addEventListener('click', () => track(name, { label, page_location: window.location.href }));
     });
 
     (function(){
@@ -403,7 +386,7 @@
       }).observe(document.documentElement, { childList:true, subtree:true });
     })();
 
-    // === FAKE DOOR INTERCEPT (runs before window-opener) ===
+    // Fake door intercept
     (function fakeDoor(){
       const overlay = document.getElementById('fd_overlay');
       const closeBtn = document.getElementById('fd_close');
@@ -411,14 +394,17 @@
       const reqBtn   = document.getElementById('fd_request');
       const contBtn  = document.getElementById('fd_continue');
 
+      const body = document.body;
       function openFD(){
         overlay.style.display = 'flex';
         overlay.setAttribute('aria-hidden', 'false');
+        body.style.overflow = 'hidden';
         track('fake_door_show');
       }
       function closeFD(){
         overlay.style.display = 'none';
         overlay.setAttribute('aria-hidden', 'true');
+        body.style.overflow = '';
       }
       closeBtn.addEventListener('click', closeFD);
       overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeFD(); });
@@ -426,32 +412,29 @@
       demoBtn.addEventListener('click', ()=> track('fake_door_demo_click'));
       reqBtn.addEventListener('click',  ()=> track('fake_door_request_access'));
 
-      // Intercept these CTAs to show the fake door first
       ['cta_try','cta_run_first','cta_pricing'].forEach(id=>{
         const el = document.getElementById(id);
         if(!el) return;
         el.addEventListener('click', function(e){
-          // SHOW MODAL instead of immediate navigation
           e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
           openFD();
         }, { capture:true });
       });
 
-      // Allow continue → actually navigate to dashboard (respects your original href target)
       contBtn.addEventListener('click', ()=>{
         closeFD();
         track('fake_door_continue');
-        // default path to main app (same as CTAs), adjust if needed
         window.open('https://siftsavvy.com', 'siftsavvy_cta_win');
       });
     })();
 
+    // Single-window open (respects fake door)
     (function forceRealWindowForCTAs(){
       document.querySelectorAll('[data-new-window="1"]').forEach(a => a.removeAttribute('target'));
       function centerSpecs(w=1100, h=820){
         try{
           const aw = window.screen.availWidth || window.innerWidth || 1280;
-          const ah = window.screen.availHeight || window.innerHeight || 800;
+        const ah = window.screen.availHeight || window.innerHeight || 800;
           const left = Math.max(0, Math.floor((aw - w) / 2));
           const top  = Math.max(0, Math.floor((ah - h) / 2));
           return `width=${w},height=${h},left=${left},top=${top}`;
@@ -459,9 +442,7 @@
       }
       function handlerFactory(el){
         return function(e){
-          // If fake door showed a modal, we already prevented default in capture phase; skip
           if (document.getElementById('fd_overlay').style.display === 'flex') return;
-
           e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
           try{ el.removeAttribute('target'); }catch(_e){}
           const href = el.getAttribute('href'); if(!href) return;
@@ -480,17 +461,11 @@
       ['cta_logo','cta_try','cta_run_first','cta_pricing','cta_main_nav','cta_zapier'].forEach(enhance);
     })();
 
-    // Back-to-top behavior
+    // Back-to-top
     (function backToTop(){
       const btn = document.getElementById('backToTop');
-      const showAfter = 600; // px scrolled
-      function toggle(){
-        if (window.scrollY > showAfter) {
-          btn.style.display = 'inline-flex';
-        } else {
-          btn.style.display = 'none';
-        }
-      }
+      const showAfter = 600;
+      function toggle(){ btn.style.display = (window.scrollY > showAfter) ? 'inline-flex' : 'none'; }
       window.addEventListener('scroll', toggle, { passive:true });
       window.addEventListener('load', toggle);
       btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
@@ -498,12 +473,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
