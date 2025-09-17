@@ -143,6 +143,10 @@
     .fd-bullet{margin:0; padding-left:18px; color:#111827}
     .fd-bullet li{margin:6px 0}
 
+    /* testimonials */
+    .quote{font-style:italic; line-height:1.5}
+    .byline{margin-top:10px; color:var(--muted); font-size:14px}
+
     @media (max-width:1024px){
       .hero{grid-template-columns:1fr; gap:18px}
     }
@@ -247,10 +251,11 @@
       </div>
     </section>
 
-    <!-- Proof & results (verifiable) -->
+    <!-- Results & Social Proof -->
     <section class="section" id="proof">
-      <h2>Proof & Transparency</h2>
+      <h2>Evidence & Feedback</h2>
       <div class="grid-3">
+        <!-- Original 3 cards (unchanged) -->
         <div class="card">
           <strong>Live demo (1 min)</strong>
           <p class="muted">See an inbox message transform into a structured lead with contact, company, request, and context.</p>
@@ -276,6 +281,25 @@
             <a class="btn" href="https://www.producthunt.com/products/sift-savvy?utm_source=landing&utm_medium=proof_card" target="_blank" rel="noopener">View on Product Hunt</a>
           </div>
           <p class="muted" style="margin-top:8px">We link to external feedback to keep things honest.</p>
+        </div>
+
+        <!-- New testimonial cards -->
+        <div class="card" aria-label="Testimonial from Sarah, Freelance Marketer">
+          <strong>Testimonial</strong>
+          <p class="quote">“Saved me 5 hours every week and stopped the back-and-forth. I see the real leads immediately.”</p>
+          <div class="byline">— Sarah, Freelance Marketer</div>
+        </div>
+
+        <div class="card" aria-label="Testimonial from RebeccaP of Ribqah of Zion">
+          <strong>Testimonial</strong>
+          <p class="quote">“Finally a simple way to separate signal from noise. I act on hot inquiries the same day.”</p>
+          <div class="byline">— RebeccaP, Ribqah of Zion</div>
+        </div>
+
+        <div class="card" aria-label="Testimonial from TroyW, Project Manager">
+          <strong>Testimonial</strong>
+          <p class="quote">“From inbox chaos to pipeline clarity. Our team responds faster and with the right context.”</p>
+          <div class="byline">— TroyW, Project Mgr</div>
         </div>
       </div>
     </section>
@@ -435,7 +459,7 @@
       function centerSpecs(w=1100, h=820){
         try{
           const aw = window.screen.availWidth || window.innerWidth || 1280;
-        const ah = window.screen.availHeight || window.innerHeight || 800;
+          const ah = window.screen.availHeight || window.innerHeight || 800;
           const left = Math.max(0, Math.floor((aw - w) / 2));
           const top  = Math.max(0, Math.floor((ah - h) / 2));
           return `width=${w},height=${h},left=${left},top=${top}`;
