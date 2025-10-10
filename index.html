@@ -29,7 +29,7 @@
  
   <!-- Open Graph -->
   <meta property="og:title" content="Sift Savvy: AI-Powered Email Lead Extractor" />
-  <meta property="og:description" content="Extract leads from emails in seconds with AI. Try free for 10 leads/month!" />
+  <meta property="og:description" content="Extract leads from emails in seconds with AI. Start free for 3 extractions/month!" />
   <meta property="og:image" content="https://leads.siftsavvy.com/thumbnail.jpg" />
   <meta property="og:url" content="https://leads.siftsavvy.com" />
 
@@ -101,6 +101,8 @@
     .btn-dark{background:var(--btn-dark);border-color:var(--btn-dark);color:#fff}
 
     .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    /* Updated: New grid-4 class for 4 pricing tiers, with responsive stacking */
+    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
     .pill{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border:1px solid var(--border);border-radius:999px;color:var(--muted);font-size:12px}
     .list{display:flex;flex-direction:column;gap:8px}
     .score{display:inline-flex;gap:6px;align-items:center;padding:6px 10px;border-radius:8px;background:#f7f9fc;border:1px solid var(--border)}
@@ -149,6 +151,11 @@
 
     @media (max-width:1024px){
       .hero{grid-template-columns:1fr; gap:18px}
+      /* Updated: Responsive adjustment for grid-4 to stack properly on smaller screens */
+      .grid-4{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:640px){
+      .grid-4{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -161,7 +168,8 @@
         </a>
         <span class="badge">Micro-SaaS</span>
       </div>
-      <div class="badge">Try free: 10 extractions</div>
+      <!-- Updated: Replaced "Try free: 10 extractions" with recommended "Try free: 3 extractions/month" for accuracy -->
+      <div class="badge">Try free: 3 extractions/month</div>
     </div>
   </header>
 
@@ -182,7 +190,8 @@
           <div class="kpi"><strong>CSV export</strong><br><span class="muted">clean data, ready to use</span></div>
         </div>
         <div class="cta">
-          <a class="btn btn-primary" id="cta_try" data-new-window="1" href="https://siftsavvy.com" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">Try Free — 10 Extractions</a>
+          <!-- Updated: Replaced "Try Free — 10 Extractions" with recommended "Start Free — 3 Extractions/Month" for better CTA flow -->
+          <a class="btn btn-primary" id="cta_try" data-new-window="1" href="https://siftsavvy.com" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">Start Free — 3 Extractions/Month</a>
           <a class="btn btn-ghost" href="#how" id="cta_how">See How It Works</a>
         </div>
         <div style="margin-top:12px" class="muted">
@@ -306,22 +315,28 @@
 
     <section class="section">
       <h2>Pricing that respects your time</h2>
-      <div class="grid-3">
+      <!-- Updated: Changed to grid-4 for new 4-tier structure; updated tier details and prices to match provided image and context -->
+      <div class="grid-4">
         <div class="card">
           <strong>Free</strong>
-          <p class="muted">10 extractions to validate your workflow. CSV export. <u>No AI urgency.</u></p>
+          <p class="muted">3 extractions per month. Basic lead scoring. CSV export. <u>No AI urgency.</u></p>
         </div>
         <div class="card">
-          <strong>Pro — $29/mo</strong>
-          <p class="muted">AI urgency detection & scoring, CSV export, priority processing.</p>
+          <strong>Starter — $19/mo</strong>
+          <p class="muted">50 extractions per month. Basic lead scoring. CSV export.</p>
         </div>
         <div class="card">
-          <strong>Annual — $313/yr</strong>
-          <p class="muted">All Pro features with 2 months free.</p>
+          <strong>Pro — $49/mo</strong>
+          <p class="muted">Unlimited extractions. AI urgency detection & scoring, CSV export, priority processing.</p>
+        </div>
+        <div class="card">
+          <strong>Done-For-You — $99/mo</strong>
+          <p class="muted">Unlimited managed extractions with monthly reports. Handled by our team—no self-signup; contact us to apply.</p>
         </div>
       </div>
       <div class="cta">
-        <a class="btn btn-primary" href="https://siftsavvy.com" id="cta_pricing" data-new-window="1" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">Start Free — 10 Extractions</a>
+        <!-- Updated: Replaced "Start Free — 10 Extractions" with recommended "Start Free — 3 Extractions/Month" -->
+        <a class="btn btn-primary" href="https://siftsavvy.com" id="cta_pricing" data-new-window="1" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">Start Free — 3 Extractions/Month</a>
       </div>
     </section>
 
@@ -330,7 +345,9 @@
       <div class="card">
         <p><strong>Does it store my email?</strong><br><span class="muted">We only process the text you submit for extraction. No inbox connection is required for the free tier.</span></p>
         <p><strong>What about compliance?</strong><br><span class="muted">You control outreach. We provide structured data from messages you already received; you decide who to contact and how.</span></p>
-        <p><strong>What’s in Pro?</strong><br><span class="muted">AI urgency detection (red flash), advanced scoring, and priority processing.</span></p>
+        <!-- Updated: Adjusted Pro description for new pricing/tiers; added note on Done-For-You -->
+        <p><strong>What’s in Pro?</strong><br><span class="muted">Unlimited extractions, AI urgency detection (red flash), advanced scoring, and priority processing. Starter offers more volume than Free.</span></p>
+        <p><strong>What’s in Done-For-You?</strong><br><span class="muted">Managed service: We run extractions and send reports. No self-signup—email support@siftsavvy.com to apply.</span></p>
         <p><strong>Integrations?</strong><br><span class="muted"><strong>Zapier Automation — now in all users’ dashboards.</strong> Google Sheets and webhooks are next based on demand.</span></p>
       </div>
     </section>
