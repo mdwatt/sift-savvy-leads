@@ -23,15 +23,20 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="robots" content="index,follow">
-  <title>Stop Missing Sales Leads Hiding in Your Inbox | Sift Savvy</title>
-  <meta name="description" content="We don't scrape—we analyze what prospects already sent you. Paste or upload emails to extract contact, company, request, and context you can act on. Pro adds AI urgency detection. CSV export. No CRM required.">
-  <meta name="keywords" content="Extract Leads, lead extraction, email leads, AI lead generation, lead management, sales leads, business intelligence" />
- 
+  <title>Stop Wasting Hours Hunting for Real Leads | Sift Savvy</title>
+  <meta name="description" content="Sift Savvy turns your overflowing inbox into a filtered lead pipeline — automatically parsing, scoring, and surfacing real leads so you don’t waste time sorting noise. Start free for 3 extractions/month.">
+  <meta name="keywords" content="Extract Leads, email leads, AI lead extraction, inbox automation, lead management, sales leads, recruiter inbox, solopreneur CRM" />
+
   <!-- Open Graph -->
-  <meta property="og:title" content="Sift Savvy: AI-Powered Email Lead Extractor" />
-  <meta property="og:description" content="Extract leads from emails in seconds with AI. Start free for 3 extractions/month!" />
+  <meta property="og:title" content="Sift Savvy: AI-Powered Inbox Lead Extraction" />
+  <meta property="og:description" content="Stop wasting hours hunting for real leads. Filter, score, and surface qualified opportunities from your email in seconds." />
   <meta property="og:image" content="https://leads.siftsavvy.com/thumbnail.jpg" />
   <meta property="og:url" content="https://leads.siftsavvy.com" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sift Savvy — AI-Powered Inbox Relief">
+  <meta name="twitter:description" content="Turn inbox chaos into qualified leads. Start free — 3 extractions/month.">
+  <meta name="twitter:image" content="https://leads.siftsavvy.com/thumbnail.jpg">
 
   <!-- Referrer / CSP -->
   <meta name="referrer" content="no-referrer">
@@ -62,6 +67,36 @@
     function track(eventName, params={}) { if (!window.gtag) return; gtag('event', eventName, params); }
   </script>
 
+  <!-- FAQ JSON-LD (SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Does Sift Savvy store my email?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We only process the text you submit for extraction. No inbox connection is required for the free tier."
+      }
+    },{
+      "@type": "Question",
+      "name": "What’s in Pro?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Unlimited extractions, AI urgency detection, advanced scoring, and priority processing."
+      }
+    },{
+      "@type": "Question",
+      "name": "Do you have automation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Zapier Automation is available in all dashboards to process emails from Gmail/Outlook triggers automatically."
+      }
+    }]
+  }
+  </script>
+
   <style>
     :root{
       --bg:#ffffff; --card:#ffffff; --text:#0b0d10; --muted:#4b5563;
@@ -70,7 +105,7 @@
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji";}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Apple Color Emoji','Segoe UI Emoji'}
     a{color:var(--accent);text-decoration:none}
     a:hover{text-decoration:underline}
     .wrap{max-width:1140px;margin:0 auto;padding:16px 24px}
@@ -79,10 +114,8 @@
     .nav{display:flex;justify-content:space-between;align-items:center;padding:10px 0}
     .brand{display:flex;gap:10px;align-items:center}
     .logo-img{height:28px;display:block;border-radius:6px}
-
     .badge{font-size:12px;border:1px solid var(--border);padding:4px 8px;border-radius:999px;color:var(--muted)}
 
-    /* HERO: clearer reading order + labels */
     .hero{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:start;padding:32px 0}
     .eyebrow{display:inline-block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:4px 10px;border-radius:999px;margin-bottom:10px}
     .hero-left .eyebrow{background:#f8fafc}
@@ -99,59 +132,22 @@
     .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#0b0d10;border:none}
     .btn-ghost{background:transparent;color:var(--text)}
     .btn-dark{background:var(--btn-dark);border-color:var(--btn-dark);color:#fff}
-
     .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    /* Updated: New grid-4 class for 4 pricing tiers, with responsive stacking */
     .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
     .pill{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border:1px solid var(--border);border-radius:999px;color:var(--muted);font-size:12px}
     .list{display:flex;flex-direction:column;gap:8px}
     .score{display:inline-flex;gap:6px;align-items:center;padding:6px 10px;border-radius:8px;background:#f7f9fc;border:1px solid var(--border)}
     .score.ok{border-color:#cfe9d7}
-    .score.warn{border-color:#f1e3b8}
-    .score.bad{border-color:#f2c8c4}
-
     .section{padding:28px 0}
     .footer{padding:28px 0;color:var(--muted);border-top:1px solid var(--border);margin-top:24px}
-
-    /* video */
     .hero-right{display:flex;flex-direction:column;gap:12px}
     .video-box{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.12);border:1px solid var(--border);background:#000}
     .video-box video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-
-    /* back-to-top */
-    #backToTop{
-      position:fixed;
-      right:calc(24px + env(safe-area-inset-right));
-      bottom:calc(24px + env(safe-area-inset-bottom));
-      display:none;
-      z-index:1200;
-      padding:10px 14px;
-      border-radius:999px;
-      box-shadow:0 8px 20px rgba(0,0,0,.15);
-    }
-
-    /* fake door modal */
-    .fd-overlay{position:fixed; inset:0; background:var(--overlay); display:none; align-items:center; justify-content:center; z-index:2000; padding:24px;}
-    .fd-modal{width:min(680px, 96vw); background:#fff; color:#0b0d10; border-radius:16px; border:1px solid #e5e7eb; box-shadow:0 30px 80px rgba(0,0,0,.25); overflow:hidden;}
-    .fd-head{padding:18px 20px; border-bottom:1px solid #e5e7eb; display:flex; align-items:center; justify-content:space-between;}
-    .fd-title{font-size:18px; font-weight:700}
-    .fd-close{border:none; background:transparent; font-size:22px; cursor:pointer; line-height:1}
-    .fd-body{padding:20px}
-    .fd-note{color:#4b5563; margin-top:8px}
-    .fd-cta{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
-    .fd-btn{padding:10px 14px; border-radius:10px; border:1px solid #e5e7eb; background:#111418; color:#fff; cursor:pointer; font-weight:600}
-    .fd-btn.secondary{background:#fff; color:#0b0d10}
-    .fd-small{font-size:12px; color:#6b7280}
-    .fd-bullet{margin:0; padding-left:18px; color:#111827}
-    .fd-bullet li{margin:6px 0}
-
-    /* testimonials */
+    #backToTop{position:fixed;right:calc(24px + env(safe-area-inset-right));bottom:calc(24px + env(safe-area-inset-bottom));display:none;z-index:1200;padding:10px 14px;border-radius:999px;box-shadow:0 8px 20px rgba(0,0,0,.15)}
     .quote{font-style:italic; line-height:1.5}
     .byline{margin-top:10px; color:var(--muted); font-size:14px}
-
     @media (max-width:1024px){
       .hero{grid-template-columns:1fr; gap:18px}
-      /* Updated: Responsive adjustment for grid-4 to stack properly on smaller screens */
       .grid-4{grid-template-columns:repeat(2,1fr)}
     }
     @media (max-width:640px){
@@ -168,34 +164,28 @@
         </a>
         <span class="badge">Micro-SaaS</span>
       </div>
-      <!-- Updated: Replaced "Try free: 10 extractions" with recommended "Try free: 3 extractions/month" for accuracy -->
       <div class="badge">Try free: 3 extractions/month</div>
     </div>
   </header>
 
   <div class="wrap">
+    <!-- Variant A HERO -->
     <section class="hero">
-      <!-- LEFT: clear starting point -->
       <div class="hero-left">
-        <div class="eyebrow">Start here</div>
-        <h1>Stop Missing Sales Leads Hiding in Your Inbox</h1>
-        <p class="muted" style="margin-top:6px;"><em>Inbound Lead Magic:</em> Find urgent opportunities hidden in your inbox.</p>
-        <p class="muted"><strong>We don't scrape — we analyze what prospects already sent you.</strong></p>
-        <p class="muted">
-          Paste or upload emails and get <strong>contact</strong>, <strong>company</strong>, <strong>request</strong>, and <strong>context</strong> you can act on.
-          <strong>Pro</strong> unlocks <strong>AI urgency detection</strong> and advanced scoring. CSV-Excel export. No CRM required.
-        </p>
+        <div class="eyebrow">AI-Powered Inbox Relief</div>
+        <h1>Stop Wasting Hours Hunting for Real Leads</h1>
+        <p class="muted" style="margin-top:6px;">Freelancers, recruiters, and small business owners use <strong>Sift Savvy</strong> to uncover qualified leads hiding in everyday emails — automatically.</p>
+        <p class="muted"><strong>No scraping. No CRM setup.</strong> Just upload or paste messages and get <strong>contact</strong>, <strong>company</strong>, and <strong>intent</strong> data in seconds. <strong>Pro</strong> adds AI urgency detection.</p>
         <div class="kpis">
-          <div class="kpi"><strong>No CRM required</strong><br><span class="muted">works with your inbox text</span></div>
-          <div class="kpi"><strong>CSV-Excel export</strong><br><span class="muted">clean data, ready to use</span></div>
+          <div class="kpi"><strong>5+ hours saved weekly</strong><br><span class="muted">average user time reclaimed</span></div>
+          <div class="kpi"><strong>Instant CSV-Excel export</strong><br><span class="muted">clean data for outreach</span></div>
         </div>
         <div class="cta">
-          <!-- Updated: Replaced "Try Free — 10 Extractions" with recommended "Start Free — 3 Extractions/Month" for better CTA flow -->
           <a class="btn btn-primary" id="cta_try" data-new-window="1" href="https://siftsavvy.com" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">Start Free — 3 Extractions/Month</a>
           <a class="btn btn-ghost" href="#how" id="cta_how">See How It Works</a>
         </div>
         <div style="margin-top:12px" class="muted">
-          No credit card for the free tier. <br><br>
+          No card needed. No integrations to start.<br><br>
           <a href="https://www.producthunt.com/products/sift-savvy?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-sift-savvy"
              target="_blank" rel="noopener noreferrer" aria-label="Find us on Product Hunt">
             <img src="assets/product-hunt-button.png" alt="Sift Savvy on Product Hunt" width="250" height="54" style="width:250px;height:54px;display:inline-block;border:0;">
@@ -203,7 +193,6 @@
         </div>
       </div>
 
-      <!-- RIGHT: demo clearly second -->
       <div class="hero-right">
         <div class="eyebrow">Watch 1-min demo</div>
         <div class="video-box" aria-label="Sift Savvy — emails transforming into structured leads">
@@ -214,12 +203,11 @@
         </div>
 
         <div class="card" aria-labelledby="example_email_output">
-          <h2 id="example_email_output" style="margin-top:0">What you get from one email</h2>
+          <h2 id="example_email_output" style="margin-top:0">One Email → One Qualified Lead</h2>
           <div class="list">
             <div class="pill">Contact: <strong>Jane Smith</strong> • jane@acme.co</div>
             <div class="pill">Company: <strong>Acme Logistics</strong></div>
-            <div class="pill">Request: <strong>Website revamp & PPC</strong></div>
-            <div class="pill">Context: “Budget approved; kickoff next week.”</div>
+            <div class="pill">Intent: <strong>“Website revamp & PPC — budget approved.”</strong></div>
             <div class="score ok">Priority (Pro): <strong>High</strong> — respond today</div>
           </div>
           <div class="cta" style="margin-top:16px">
@@ -248,7 +236,6 @@
       </div>
     </section>
 
-    <!-- Automation -->
     <section class="section" id="automation">
       <h2>Automation (New)</h2>
       <div class="card">
@@ -260,11 +247,9 @@
       </div>
     </section>
 
-    <!-- Results & Social Proof -->
     <section class="section" id="proof">
       <h2>Evidence & Feedback</h2>
       <div class="grid-3">
-        <!-- Original 3 cards (unchanged) -->
         <div class="card">
           <strong>Live demo (1 min)</strong>
           <p class="muted">See an inbox message transform into a structured lead with contact, company, request, and context.</p>
@@ -292,7 +277,6 @@
           <p class="muted" style="margin-top:8px">We link to external feedback to keep things honest.</p>
         </div>
 
-        <!-- New testimonial cards -->
         <div class="card" aria-label="Testimonial from Sarah, Freelance Marketer">
           <strong>Testimonial</strong>
           <p class="quote">“Saved me 5 hours every week and stopped the back-and-forth. I see the real leads immediately.”</p>
@@ -315,7 +299,6 @@
 
     <section class="section">
       <h2>Pricing that respects your time</h2>
-      <!-- Updated: Changed to grid-4 for new 4-tier structure; updated tier details and prices to match provided image and context -->
       <div class="grid-4">
         <div class="card">
           <strong>Free</strong>
@@ -335,7 +318,6 @@
         </div>
       </div>
       <div class="cta">
-        <!-- Updated: Replaced "Start Free — 10 Extractions" with recommended "Start Free — 3 Extractions/Month" -->
         <a class="btn btn-primary" href="https://siftsavvy.com" id="cta_pricing" data-new-window="1" rel="noopener noreferrer nofollow" referrerpolicy="no-referrer">Start Free — 3 Extractions/Month</a>
       </div>
     </section>
@@ -345,7 +327,6 @@
       <div class="card">
         <p><strong>Does it store my email?</strong><br><span class="muted">We only process the text you submit for extraction. No inbox connection is required for the free tier.</span></p>
         <p><strong>What about compliance?</strong><br><span class="muted">You control outreach. We provide structured data from messages you already received; you decide who to contact and how.</span></p>
-        <!-- Updated: Adjusted Pro description for new pricing/tiers; added note on Done-For-You -->
         <p><strong>What’s in Pro?</strong><br><span class="muted">Unlimited extractions, AI urgency detection (red flash), advanced scoring, and priority processing. Starter offers more volume than Free.</span></p>
         <p><strong>What’s in Done-For-You?</strong><br><span class="muted">Managed service: We run extractions and send reports. No self-signup—email support@siftsavvy.com to apply.</span></p>
         <p><strong>Integrations?</strong><br><span class="muted"><strong>Zapier Automation — now in all users’ dashboards.</strong> Google Sheets and webhooks are next based on demand.</span></p>
@@ -364,7 +345,6 @@
     </div>
   </footer>
 
-  <!-- Back to top -->
   <button id="backToTop" class="btn btn-dark" aria-label="Back to top" title="Back to top">↑ Top</button>
 
   <!-- Early Access (Fake Door) -->
@@ -503,7 +483,6 @@
       ['cta_logo','cta_try','cta_run_first','cta_pricing','cta_main_nav','cta_zapier'].forEach(enhance);
     })();
 
-    // Back-to-top
     (function backToTop(){
       const btn = document.getElementById('backToTop');
       const showAfter = 600;
