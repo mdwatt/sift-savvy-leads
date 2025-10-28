@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
+import sys
+sys.stdout.flush()
+sys.stderr.flush()
+
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
 from openai import OpenAI
+import traceback
 
 app = Flask(__name__, static_folder='.')
 CORS(app)
@@ -102,13 +107,58 @@ def extract_lead():
         return jsonify(lead_data)
         
     except Exception as e:
-        print(f"Error extracting lead: {str(e)}")
-        return jsonify({'error': 'Failed to process request. Please try again.'}), 500
+        error_details = traceback.format_exc()
+        print(f"=" * 80, file=sys.stderr)
+        print(f"ERROR EXTRACTING LEAD:", file=sys.stderr)
+        print(f"Error type: {type(e).__name__}", file=sys.stderr)
+        print(f"Error message: {str(e)}", file=sys.stderr)
+        print(f"Full traceback:", file=sys.stderr)
+        print(error_details, file=sys.stderr)
+        print(f"=" * 80, file=sys.stderr)
+        sys.stderr.flush()
+        return jsonify({'error': f'Failed to process request: {str(e)}'}), 500
 
 @app.route('/api/health', methods=['GET'])
 def health():
     return jsonify({'status': 'ok'})
 
+@app.route('/api/test-openai', methods=['GET'])
+def test_openai():
+    """Test endpoint to verify OpenAI connection"""
+    try:
+        print("Testing OpenAI connection...", file=sys.stderr)
+        sys.stderr.flush()
+        
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": "Say 'test successful'"}],
+            max_tokens=10
+        )
+        
+        result = response.choices[0].message.content
+        print(f"OpenAI test successful: {result}", file=sys.stderr)
+        sys.stderr.flush()
+        
+        return jsonify({
+            'status': 'success',
+            'message': 'OpenAI connection working',
+            'test_response': result
+        })
+    except Exception as e:
+        error_msg = f"OpenAI test failed: {type(e).__name__}: {str(e)}"
+        print(error_msg, file=sys.stderr)
+        print(traceback.format_exc(), file=sys.stderr)
+        sys.stderr.flush()
+        return jsonify({
+            'status': 'error',
+            'message': error_msg,
+            'details': str(e)
+        }), 500
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
+    print(f"Starting server on port {port}...", file=sys.stderr)
+    print(f"OpenAI API key configured: {'Yes' if openai_api_key else 'No'}", file=sys.stderr)
+    print(f"OpenAI base URL: {openai_base_url or 'Default (api.openai.com)'}", file=sys.stderr)
+    sys.stderr.flush()
     app.run(host='0.0.0.0', port=port, debug=False)
