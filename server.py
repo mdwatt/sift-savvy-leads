@@ -7,10 +7,16 @@ from openai import OpenAI
 app = Flask(__name__, static_folder='.')
 CORS(app)
 
-client = OpenAI(
-    api_key=os.environ.get("AI_INTEGRATIONS_OPENAI_API_KEY"),
-    base_url=os.environ.get("AI_INTEGRATIONS_OPENAI_BASE_URL")
-)
+openai_api_key = os.environ.get("AI_INTEGRATIONS_OPENAI_API_KEY") or os.environ.get("OPENAI_API_KEY")
+openai_base_url = os.environ.get("AI_INTEGRATIONS_OPENAI_BASE_URL")
+
+if not openai_api_key:
+    raise ValueError("OpenAI API key not found. Set either AI_INTEGRATIONS_OPENAI_API_KEY (Replit) or OPENAI_API_KEY (production) environment variable.")
+
+if openai_base_url:
+    client = OpenAI(api_key=openai_api_key, base_url=openai_base_url)
+else:
+    client = OpenAI(api_key=openai_api_key)
 
 EXTRACTION_PROMPT = """You are a professional lead extraction assistant. Analyze the email content and extract business lead information.
 
