@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 import sys
-sys.stdout.flush()
-sys.stderr.flush()
+import os
+
+# Enable unbuffered output for production logging
+if os.environ.get('PYTHONUNBUFFERED') is None:
+    os.environ['PYTHONUNBUFFERED'] = '1'
 
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-import os
 from openai import OpenAI
 import traceback
 
