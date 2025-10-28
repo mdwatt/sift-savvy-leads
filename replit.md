@@ -22,6 +22,15 @@ Streamlined, conversion-focused landing page for Sift Savvy, an AI-powered inbox
 - CORS enabled for API endpoints
 
 ## Recent Changes
+- **2025-10-28**: Implemented production-ready 24-hour auto-refresh rate limiting
+  - Rate limiting now uses timestamped state (count + resetAt) instead of simple counter
+  - Attempts automatically refresh every 24 hours without page reload
+  - Countdown timer shows "0 attempts left — refreshes in Xh Ym" when exhausted
+  - Users regain 3 attempts automatically when timer elapses (in-session)
+  - Edge cases handled: corrupt data, multi-tab sync, network errors don't consume attempts
+  - Production-ready: No manual localStorage clearing required (F12 workaround removed)
+  - Architect Agent verified complete functionality and best practices maintained
+
 - **2025-10-28**: Added Website and LinkedIn extraction fields
   - Hero section example now displays website and LinkedIn profile
   - Updated demo placeholder text with website and LinkedIn examples
@@ -49,7 +58,7 @@ Streamlined, conversion-focused landing page for Sift Savvy, an AI-powered inbox
   - Integrated OpenAI for AI-powered lead extraction
   - Implemented smart filtering (personal emails, spam, newsletters rejected)
   - Added interactive demo section with text area and real-time extraction
-  - 3-attempt rate limiting using browser localStorage
+  - Production-ready rate limiting: 3 attempts every 24 hours with auto-refresh
   - Visual results display with urgency badges and lead scoring
   - Tested and validated with business and personal email samples
   
@@ -60,13 +69,15 @@ Streamlined, conversion-focused landing page for Sift Savvy, an AI-powered inbox
   - Configured deployment for production hosting
 
 ## Features
-- **Interactive Lead Extraction Demo (The Bot)**: Test AI extraction with 3 free attempts
-  - Extracts: contact name, email, phone, company, intent
+- **Interactive Lead Extraction Demo (The Bot)**: Test AI extraction with 3 free attempts every 24 hours
+  - Extracts: contact name, email, phone, company, website, LinkedIn, intent
   - AI urgency detection (High/Medium/Low)
   - Lead scoring (1-10 scale)
   - Smart filtering of personal emails, spam, newsletters
   - Character counter and loading states
   - Color-coded urgency badges
+  - **24-hour auto-refresh**: Attempts automatically reset after 24h with live countdown timer
+  - Production-ready: No manual browser cache clearing required
 - **Streamlined Conversion Flow**: Focused page structure driving users to main app
 - **Product Hunt Integration**: Community social proof
 - **Multiple CTAs**: Strategic placement throughout page to main app
@@ -79,7 +90,7 @@ Streamlined, conversion-focused landing page for Sift Savvy, an AI-powered inbox
 - `POST /api/extract` - Lead extraction endpoint
   - Request: `{"content": "email text"}`
   - Response: Lead data or rejection reason
-  - Rate limit: Client-side (3 attempts via localStorage)
+  - Rate limit: Client-side (3 attempts per 24 hours, auto-refreshes)
 
 ## Target Audience
 - Solopreneurs
