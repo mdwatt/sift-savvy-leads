@@ -1,7 +1,7 @@
 # Sift Savvy Landing Page
 
 ## Overview
-Interactive landing page for Sift Savvy, an AI-powered inbox lead extraction platform. Features a live demo that lets visitors test lead extraction with their own email content.
+Streamlined, conversion-focused landing page for Sift Savvy, an AI-powered inbox lead extraction platform. Features an interactive demo that lets visitors test lead extraction with their own email content.
 
 ## Project Structure
 - `index.html` - Main landing page with embedded CSS and JavaScript (includes interactive demo)
@@ -22,6 +22,14 @@ Interactive landing page for Sift Savvy, an AI-powered inbox lead extraction pla
 - CORS enabled for API endpoints
 
 ## Recent Changes
+- **2025-10-28**: Landing page streamlined for conversions
+  - Updated hero messaging to target solopreneurs, small business owners, freelancers, marketers, recruiters, entrepreneurs
+  - Removed Automation, Evidence/Testimonials, Pricing, and FAQ sections
+  - Added Product Hunt community section
+  - Added strong final CTA section with "Go to Main App" button
+  - Page flow: Hero → How It Works → Interactive Demo → Product Hunt → Final CTA
+  - Reduced from 663 to 586 lines (77 lines removed)
+  
 - **2025-10-28**: Interactive lead extraction demo added
   - Added Flask backend with `/api/extract` endpoint
   - Integrated OpenAI for AI-powered lead extraction
@@ -38,19 +46,19 @@ Interactive landing page for Sift Savvy, an AI-powered inbox lead extraction pla
   - Configured deployment for production hosting
 
 ## Features
-- **Interactive Lead Extraction Demo**: Test AI extraction with 3 free attempts
+- **Interactive Lead Extraction Demo (The Bot)**: Test AI extraction with 3 free attempts
   - Extracts: contact name, email, phone, company, intent
   - AI urgency detection (High/Medium/Low)
   - Lead scoring (1-10 scale)
   - Smart filtering of personal emails, spam, newsletters
   - Character counter and loading states
   - Color-coded urgency badges
+- **Streamlined Conversion Flow**: Focused page structure driving users to main app
+- **Product Hunt Integration**: Community social proof
+- **Multiple CTAs**: Strategic placement throughout page to main app
 - Responsive design with mobile support
-- Fake door modal for early access/lead capture
 - Analytics tracking for user interactions
-- Embedded demo video with poster
-- Sample CSV-Excel download
-- Product Hunt integration
+- Embedded demo video
 
 ## API Endpoints
 - `GET /` - Main landing page
@@ -58,6 +66,14 @@ Interactive landing page for Sift Savvy, an AI-powered inbox lead extraction pla
   - Request: `{"content": "email text"}`
   - Response: Lead data or rejection reason
   - Rate limit: Client-side (3 attempts via localStorage)
+
+## Target Audience
+- Solopreneurs
+- Small business owners
+- Freelancers
+- Marketers
+- Recruiters
+- Entrepreneurs
 
 ## Deployment
 - GitHub repository sync enabled (can push changes back to GitHub)
