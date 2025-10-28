@@ -132,6 +132,17 @@
     .fd-bullet{margin:0; padding-left:18px; color:#111827}
     .fd-bullet li{margin:6px 0}
 
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .result-pill{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:#fff;font-size:14px;margin:4px 0}
+    .result-pill strong{color:var(--text)}
+    .urgency-high{background:#fee;border-color:#fcc;color:#c00}
+    .urgency-medium{background:#fef3cd;border-color:#ffc107;color:#856404}
+    .urgency-low{background:#e8f5e9;border-color:#4caf50;color:#2e7d32}
+    .score-badge{display:inline-block;padding:4px 10px;border-radius:6px;background:#4da3ff;color:#fff;font-weight:600;font-size:13px}
+
     @media (max-width:1024px){
       .hero{grid-template-columns:1fr; gap:18px}
       .grid-4{grid-template-columns:repeat(2,1fr)}
@@ -218,6 +229,42 @@
         <div class="card">
           <strong>3) Export & act</strong>
           <p class="muted">One-click CSV. Prioritize (Pro) and start outreach immediately.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="try-demo">
+      <h2>Try It Now — Extract Leads with AI</h2>
+      <div class="card" style="max-width:800px;margin:0 auto">
+        <p style="margin-top:0"><strong>Test lead extraction in real-time.</strong> Paste an email below and see how AI extracts contact info, company details, and urgency levels.</p>
+        <p class="muted">Personal emails, newsletters, and spam are automatically filtered out. You have <strong id="attempts-remaining">3 free attempts</strong> to test.</p>
+        
+        <div style="margin-top:20px">
+          <label for="email-content" style="display:block;margin-bottom:8px;font-weight:600">Email Content</label>
+          <textarea 
+            id="email-content" 
+            placeholder="Paste email content here for lead extraction...&#10;&#10;Example:&#10;Hi, I'm Sarah from Acme Corp. We're looking for a web developer to revamp our company website. Budget is $10k and we'd like to start next week. Can you help?&#10;&#10;Sarah Johnson&#10;Head of Marketing&#10;sarah@acmecorp.com&#10;555-123-4567"
+            style="width:100%;min-height:180px;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;resize:vertical"
+            maxlength="2000"
+          ></textarea>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+            <span class="muted" style="font-size:13px">Processing time: ~2-3 seconds per lead</span>
+            <span class="muted" style="font-size:13px" id="char-count">Characters: 0/2000</span>
+          </div>
+        </div>
+
+        <div class="cta" style="margin-top:16px">
+          <button class="btn btn-primary" id="extract-btn" onclick="extractLead()">Extract Lead</button>
+          <button class="btn btn-ghost" id="clear-btn" onclick="clearForm()">Clear</button>
+        </div>
+
+        <div id="extraction-result" style="display:none;margin-top:24px;padding:20px;background:#f8fafc;border:1px solid var(--border);border-radius:12px">
+          <div id="result-content"></div>
+        </div>
+
+        <div id="loading-indicator" style="display:none;margin-top:20px;text-align:center;padding:20px">
+          <div style="display:inline-block;width:40px;height:40px;border:4px solid #f3f3f3;border-top:4px solid var(--accent);border-radius:50%;animation:spin 1s linear infinite"></div>
+          <p class="muted" style="margin-top:12px">Analyzing email content...</p>
         </div>
       </div>
     </section>
@@ -477,6 +524,139 @@
       window.addEventListener('load', toggle);
       btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     })();
+
+    const ATTEMPTS_KEY = 'siftsavvy_attempts';
+    const MAX_ATTEMPTS = 3;
+
+    function getAttempts() {
+      const stored = localStorage.getItem(ATTEMPTS_KEY);
+      return stored ? parseInt(stored, 10) : 0;
+    }
+
+    function setAttempts(count) {
+      localStorage.setItem(ATTEMPTS_KEY, count.toString());
+    }
+
+    function updateAttemptsUI() {
+      const attempts = getAttempts();
+      const remaining = Math.max(0, MAX_ATTEMPTS - attempts);
+      document.getElementById('attempts-remaining').textContent = `${remaining} free attempt${remaining !== 1 ? 's' : ''}`;
+      
+      const extractBtn = document.getElementById('extract-btn');
+      if (remaining === 0) {
+        extractBtn.disabled = true;
+        extractBtn.style.opacity = '0.5';
+        extractBtn.style.cursor = 'not-allowed';
+        extractBtn.textContent = 'No attempts remaining';
+      }
+    }
+
+    function updateCharCount() {
+      const textarea = document.getElementById('email-content');
+      const count = textarea.value.length;
+      document.getElementById('char-count').textContent = `Characters: ${count}/2000`;
+    }
+
+    document.getElementById('email-content').addEventListener('input', updateCharCount);
+
+    function clearForm() {
+      document.getElementById('email-content').value = '';
+      updateCharCount();
+      document.getElementById('extraction-result').style.display = 'none';
+    }
+
+    async function extractLead() {
+      const attempts = getAttempts();
+      if (attempts >= MAX_ATTEMPTS) {
+        alert('You have used all 3 free attempts. Sign up for unlimited extractions!');
+        return;
+      }
+
+      const content = document.getElementById('email-content').value.trim();
+      if (!content) {
+        alert('Please paste some email content to extract.');
+        return;
+      }
+
+      const loadingEl = document.getElementById('loading-indicator');
+      const resultEl = document.getElementById('extraction-result');
+      const extractBtn = document.getElementById('extract-btn');
+
+      extractBtn.disabled = true;
+      loadingEl.style.display = 'block';
+      resultEl.style.display = 'none';
+
+      try {
+        const response = await fetch('/api/extract', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to extract lead');
+        }
+
+        setAttempts(attempts + 1);
+        updateAttemptsUI();
+
+        displayResult(data);
+        track('lead_extraction_success', { attempts: attempts + 1 });
+
+      } catch (error) {
+        console.error('Extraction error:', error);
+        alert('Error processing your request. Please try again.');
+        track('lead_extraction_error', { error: error.message });
+      } finally {
+        loadingEl.style.display = 'none';
+        extractBtn.disabled = false;
+      }
+    }
+
+    function displayResult(data) {
+      const resultContent = document.getElementById('result-content');
+      const resultEl = document.getElementById('extraction-result');
+
+      if (data.is_valid_lead === 'no') {
+        resultContent.innerHTML = `
+          <div style="text-align:center;padding:20px">
+            <div style="font-size:48px;margin-bottom:12px">🚫</div>
+            <h3 style="margin:0 0 8px;color:var(--text)">Not a Business Lead</h3>
+            <p class="muted">${data.reason || 'This appears to be a personal email, newsletter, or spam and was filtered out.'}</p>
+            <p class="muted" style="margin-top:12px;font-size:13px">Try pasting a business inquiry email to see lead extraction in action.</p>
+          </div>
+        `;
+      } else {
+        const urgencyClass = data.urgency_level === 'High' ? 'urgency-high' : 
+                            data.urgency_level === 'Medium' ? 'urgency-medium' : 'urgency-low';
+        
+        resultContent.innerHTML = `
+          <div style="text-align:center;margin-bottom:20px">
+            <div style="font-size:48px;margin-bottom:8px">✅</div>
+            <h3 style="margin:0;color:var(--text)">Valid Business Lead Extracted!</h3>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            ${data.contact_name ? `<div class="result-pill"><strong>Contact:</strong> ${data.contact_name}</div>` : ''}
+            ${data.email ? `<div class="result-pill"><strong>Email:</strong> ${data.email}</div>` : ''}
+            ${data.phone ? `<div class="result-pill"><strong>Phone:</strong> ${data.phone}</div>` : ''}
+            ${data.company ? `<div class="result-pill"><strong>Company:</strong> ${data.company}</div>` : ''}
+            ${data.intent ? `<div class="result-pill"><strong>Intent:</strong> ${data.intent}</div>` : ''}
+            ${data.urgency_level ? `<div class="result-pill ${urgencyClass}"><strong>Urgency:</strong> ${data.urgency_level}</div>` : ''}
+            ${data.lead_score ? `<div class="result-pill"><strong>Lead Score:</strong> <span class="score-badge">${data.lead_score}/10</span></div>` : ''}
+          </div>
+          <div style="margin-top:20px;padding:16px;background:#e8f5e9;border-radius:8px;border:1px solid #4caf50">
+            <p style="margin:0;font-size:14px;color:#2e7d32"><strong>💡 Pro Tip:</strong> This lead would be exported to CSV with all fields for easy follow-up!</p>
+          </div>
+        `;
+      }
+
+      resultEl.style.display = 'block';
+      resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    updateAttemptsUI();
   </script>
 </body>
 </html>
