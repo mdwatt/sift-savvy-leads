@@ -11,3 +11,8 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Python packaging (Replit-specific, exclude from GitHub)
+pyproject.toml
+uv.lock
+*.lock
