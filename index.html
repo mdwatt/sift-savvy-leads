@@ -221,7 +221,7 @@
       <h2>Try It Now — Extract Leads with AI</h2>
       <div class="card" style="max-width:800px;margin:0 auto">
         <p style="margin-top:0"><strong>Test lead extraction in real-time.</strong> Paste an email below and see how AI extracts contact info, company details, and urgency levels.</p>
-        <p class="muted">Personal emails, newsletters, and spam are automatically filtered out. You have <strong id="attempts-remaining">3 free attempts</strong> to test.</p>
+        <p class="muted">Personal emails, newsletters, and spam are automatically filtered out. You have <strong id="attempts-remaining">3 free attempts</strong> every 24 hours to test.</p>
         
         <div style="margin-top:20px">
           <label for="email-content" style="display:block;margin-bottom:8px;font-weight:600">Email Content</label>
@@ -451,31 +451,133 @@
       btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     })();
 
-    const ATTEMPTS_KEY = 'siftsavvy_attempts';
+    const ATTEMPTS_KEY = 'siftsavvy_attempt_meta';
     const MAX_ATTEMPTS = 3;
+    const RESET_INTERVAL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
-    function getAttempts() {
-      const stored = localStorage.getItem(ATTEMPTS_KEY);
-      return stored ? parseInt(stored, 10) : 0;
+    let countdownInterval = null;
+
+    function getRateLimitState() {
+      try {
+        const stored = localStorage.getItem(ATTEMPTS_KEY);
+        if (!stored) {
+          const newState = { count: 0, resetAt: Date.now() + RESET_INTERVAL_MS };
+          saveRateLimitState(newState);
+          return newState;
+        }
+        
+        const state = JSON.parse(stored);
+        
+        if (!state.count && state.count !== 0 || !state.resetAt) {
+          const newState = { count: 0, resetAt: Date.now() + RESET_INTERVAL_MS };
+          saveRateLimitState(newState);
+          return newState;
+        }
+        
+        return state;
+      } catch (e) {
+        console.warn('Rate limit state corrupted, resetting:', e);
+        const newState = { count: 0, resetAt: Date.now() + RESET_INTERVAL_MS };
+        saveRateLimitState(newState);
+        return newState;
+      }
     }
 
-    function setAttempts(count) {
-      localStorage.setItem(ATTEMPTS_KEY, count.toString());
+    function resetRateLimit() {
+      const newState = { count: 0, resetAt: Date.now() + RESET_INTERVAL_MS };
+      saveRateLimitState(newState);
+      return newState;
+    }
+
+    function saveRateLimitState(state) {
+      try {
+        localStorage.setItem(ATTEMPTS_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.error('Failed to save rate limit state:', e);
+      }
+    }
+
+    function consumeAttempt() {
+      const state = getRateLimitState();
+      state.count += 1;
+      if (state.count === 1) {
+        state.resetAt = Date.now() + RESET_INTERVAL_MS;
+      }
+      saveRateLimitState(state);
+      return state;
+    }
+
+    function getRemaining() {
+      const state = getRateLimitState();
+      return Math.max(0, MAX_ATTEMPTS - state.count);
+    }
+
+    function getTimeUntilReset() {
+      const state = getRateLimitState();
+      return Math.max(0, state.resetAt - Date.now());
+    }
+
+    function formatTimeRemaining(ms) {
+      const hours = Math.floor(ms / (60 * 60 * 1000));
+      const minutes = Math.floor((ms % (60 * 60 * 1000)) / (60 * 1000));
+      
+      if (hours > 0) {
+        return `${hours}h ${minutes}m`;
+      }
+      return `${minutes}m`;
     }
 
     function updateAttemptsUI() {
-      const attempts = getAttempts();
-      const remaining = Math.max(0, MAX_ATTEMPTS - attempts);
-      document.getElementById('attempts-remaining').textContent = `${remaining} free attempt${remaining !== 1 ? 's' : ''}`;
+      const state = getRateLimitState();
+      const timeUntilReset = Math.max(0, state.resetAt - Date.now());
       
+      if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+      }
+      
+      if (timeUntilReset <= 0 && state.count > 0) {
+        resetRateLimit();
+        updateAttemptsUI();
+        return;
+      }
+      
+      const remaining = Math.max(0, MAX_ATTEMPTS - state.count);
+      const attemptsEl = document.getElementById('attempts-remaining');
       const extractBtn = document.getElementById('extract-btn');
+      
       if (remaining === 0) {
+        const updateCountdown = () => {
+          const ms = Math.max(0, state.resetAt - Date.now());
+          if (ms <= 0) {
+            resetRateLimit();
+            updateAttemptsUI();
+            return;
+          }
+          attemptsEl.innerHTML = `<span style="color:#e74c3c">0 attempts left</span> &mdash; refreshes in ${formatTimeRemaining(ms)}`;
+        };
+        
+        updateCountdown();
+        countdownInterval = setInterval(updateCountdown, 30000); // Update every 30 seconds
+        
         extractBtn.disabled = true;
         extractBtn.style.opacity = '0.5';
         extractBtn.style.cursor = 'not-allowed';
         extractBtn.textContent = 'No attempts remaining';
+      } else {
+        attemptsEl.textContent = `${remaining} free attempt${remaining !== 1 ? 's' : ''}`;
+        extractBtn.disabled = false;
+        extractBtn.style.opacity = '1';
+        extractBtn.style.cursor = 'pointer';
+        extractBtn.textContent = 'Extract Lead';
       }
     }
+
+    window.addEventListener('storage', (e) => {
+      if (e.key === ATTEMPTS_KEY) {
+        updateAttemptsUI();
+      }
+    });
 
     function updateCharCount() {
       const textarea = document.getElementById('email-content');
@@ -492,9 +594,10 @@
     }
 
     async function extractLead() {
-      const attempts = getAttempts();
-      if (attempts >= MAX_ATTEMPTS) {
-        alert('You have used all 3 free attempts. Sign up for unlimited extractions!');
+      const remaining = getRemaining();
+      if (remaining <= 0) {
+        const timeUntilReset = getTimeUntilReset();
+        alert(`You've used all 3 free attempts. Attempts refresh in ${formatTimeRemaining(timeUntilReset)}. Sign up for unlimited extractions!`);
         return;
       }
 
@@ -525,11 +628,11 @@
           throw new Error(data.error || 'Failed to extract lead');
         }
 
-        setAttempts(attempts + 1);
+        const newState = consumeAttempt();
         updateAttemptsUI();
 
         displayResult(data);
-        track('lead_extraction_success', { attempts: attempts + 1 });
+        track('lead_extraction_success', { attempts: newState.count });
 
       } catch (error) {
         console.error('Extraction error:', error);
@@ -537,7 +640,7 @@
         track('lead_extraction_error', { error: error.message });
       } finally {
         loadingEl.style.display = 'none';
-        extractBtn.disabled = false;
+        updateAttemptsUI();
       }
     }
 
