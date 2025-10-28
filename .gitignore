@@ -16,3 +16,6 @@ Thumbs.db
 pyproject.toml
 uv.lock
 *.lock
+
+# Debugging artifacts
+attached_assets/

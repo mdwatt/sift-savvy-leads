@@ -21,7 +21,20 @@ Streamlined, conversion-focused landing page for Sift Savvy, an AI-powered inbox
 - Host: 0.0.0.0 (to support Replit's proxy/iframe setup)
 - CORS enabled for API endpoints
 
+## Deployment Configuration
+- `.gitignore` - Excludes Replit-specific files (pyproject.toml, uv.lock, attached_assets) from GitHub
+- `.renderignore` - Excludes development artifacts from Render deployment
+- Render uses only `requirements.txt` for Python dependencies
+
 ## Recent Changes
+- **2025-10-28**: Fixed Render deployment issue (permanent fix)
+  - Root cause: Replit-specific files (pyproject.toml, uv.lock) confused Render's deployment
+  - Solution: Created .renderignore to exclude development artifacts
+  - Added /api/test-openai endpoint for OpenAI connection diagnostics
+  - Enhanced error logging with detailed stack traces for production debugging
+  - Server.py verified working in both dev and production environments
+
+
 - **2025-10-28**: Implemented production-ready 24-hour auto-refresh rate limiting
   - Rate limiting now uses timestamped state (count + resetAt) instead of simple counter
   - Attempts automatically refresh every 24 hours without page reload

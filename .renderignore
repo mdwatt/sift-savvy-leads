@@ -1,0 +1,17 @@
+# Replit-specific files
+.replit
+.config/
+.upm/
+.cache/
+.breakpoints
+__pycache__/
+.pythonlibs/
+
+# Debugging/development artifacts
+attached_assets/
+pyproject.toml
+uv.lock
+*.lock
+
+# Git
+.git/
