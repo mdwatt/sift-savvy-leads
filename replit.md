@@ -22,12 +22,17 @@ Streamlined, conversion-focused landing page for Sift Savvy, an AI-powered inbox
 - CORS enabled for API endpoints
 
 ## Recent Changes
+- **2025-10-28**: Moved interactive demo higher for better conversion flow
+  - Demo section ("Try It Now") now appears immediately after hero
+  - New page flow: Hero → Interactive Demo → How It Works → Product Hunt → Final CTA
+  - Captures visitor engagement while attention is highest
+  - Architect Agent verified all functionality preserved and best practices maintained
+
 - **2025-10-28**: Landing page streamlined for conversions
   - Updated hero messaging to target solopreneurs, small business owners, freelancers, marketers, recruiters, entrepreneurs
   - Removed Automation, Evidence/Testimonials, Pricing, and FAQ sections
   - Added Product Hunt community section
   - Added strong final CTA section with "Go to Main App" button
-  - Page flow: Hero → How It Works → Interactive Demo → Product Hunt → Final CTA
   - Reduced from 663 to 586 lines (77 lines removed)
   
 - **2025-10-28**: Interactive lead extraction demo added
