@@ -24,6 +24,8 @@ Extract the following if it's a valid business lead:
 - Email: Business email address
 - Phone: Phone number if present
 - Company: Company name
+- Website: Company website URL if mentioned (without http/https prefix)
+- LinkedIn: LinkedIn profile URL if mentioned (without http/https prefix)
 - Intent: Brief description of what they want (1-2 sentences)
 - Urgency Level: "High" (respond today), "Medium" (respond this week), or "Low" (no rush)
 - Lead Score: Rate 1-10 based on clarity of intent, budget signals, decision-making authority
@@ -42,6 +44,8 @@ If it IS a valid business lead, respond with:
   "email": "...",
   "phone": "...",
   "company": "...",
+  "website": "...",
+  "linkedin": "...",
   "intent": "...",
   "urgency_level": "High/Medium/Low",
   "lead_score": X,

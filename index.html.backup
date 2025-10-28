@@ -204,8 +204,6 @@
           <div class="list">
             <div class="pill">Contact: <strong>Jane Smith</strong> • jane@acme.co</div>
             <div class="pill">Company: <strong>Acme Logistics</strong></div>
-            <div class="pill">Website: <strong>acmelogistics.com</strong></div>
-            <div class="pill">LinkedIn: <strong>linkedin.com/in/janesmith</strong></div>
             <div class="pill">Intent: <strong>“Website revamp & PPC — budget approved.”</strong></div>
             <div class="score ok">Priority (Pro): <strong>High</strong> — respond today</div>
           </div>
@@ -227,7 +225,7 @@
           <label for="email-content" style="display:block;margin-bottom:8px;font-weight:600">Email Content</label>
           <textarea 
             id="email-content" 
-            placeholder="Paste email content here for lead extraction...&#10;&#10;Example:&#10;Hi, I'm Sarah from Acme Corp. We're looking for a web developer to revamp our company website. Budget is $10k and we'd like to start next week. Can you help?&#10;&#10;Sarah Johnson&#10;Head of Marketing&#10;sarah@acmecorp.com&#10;555-123-4567&#10;Company website: https://acmecorp.com&#10;LinkedIn profile: linkedin.com/in/sarahjohnson"
+            placeholder="Paste email content here for lead extraction...&#10;&#10;Example:&#10;Hi, I'm Sarah from Acme Corp. We're looking for a web developer to revamp our company website. Budget is $10k and we'd like to start next week. Can you help?&#10;&#10;Sarah Johnson&#10;Head of Marketing&#10;sarah@acmecorp.com&#10;555-123-4567"
             style="width:100%;min-height:180px;padding:12px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:14px;resize:vertical"
             maxlength="2000"
           ></textarea>
@@ -262,7 +260,7 @@
         </div>
         <div class="card">
           <strong>2) Extract only what matters</strong>
-          <p class="muted">Contact, company, website, LinkedIn, request, brief context. <em>Pro</em> adds AI urgency detection.</p>
+          <p class="muted">Contact, company, request, brief context. <em>Pro</em> adds AI urgency detection.</p>
         </div>
         <div class="card">
           <strong>3) Export & act</strong>
@@ -568,8 +566,6 @@
             ${data.email ? `<div class="result-pill"><strong>Email:</strong> ${data.email}</div>` : ''}
             ${data.phone ? `<div class="result-pill"><strong>Phone:</strong> ${data.phone}</div>` : ''}
             ${data.company ? `<div class="result-pill"><strong>Company:</strong> ${data.company}</div>` : ''}
-            ${data.website ? `<div class="result-pill"><strong>Website:</strong> ${data.website}</div>` : ''}
-            ${data.linkedin ? `<div class="result-pill"><strong>LinkedIn:</strong> ${data.linkedin}</div>` : ''}
             ${data.intent ? `<div class="result-pill"><strong>Intent:</strong> ${data.intent}</div>` : ''}
             ${data.urgency_level ? `<div class="result-pill ${urgencyClass}"><strong>Urgency:</strong> ${data.urgency_level}</div>` : ''}
             ${data.lead_score ? `<div class="result-pill"><strong>Lead Score:</strong> <span class="score-badge">${data.lead_score}/10</span></div>` : ''}
