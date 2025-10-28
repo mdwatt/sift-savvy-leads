@@ -22,6 +22,15 @@ Streamlined, conversion-focused landing page for Sift Savvy, an AI-powered inbox
 - CORS enabled for API endpoints
 
 ## Recent Changes
+- **2025-10-28**: Added Website and LinkedIn extraction fields
+  - Hero section example now displays website and LinkedIn profile
+  - Updated demo placeholder text with website and LinkedIn examples
+  - "How it works" section mentions website and LinkedIn extraction
+  - Backend AI prompt updated to extract website and LinkedIn URLs
+  - Frontend JavaScript displays website and LinkedIn fields when present
+  - API tested successfully - extracts all fields including new additions
+  - Architect Agent verified all functionality working properly and best practices maintained
+
 - **2025-10-28**: Moved interactive demo higher for better conversion flow
   - Demo section ("Try It Now") now appears immediately after hero
   - New page flow: Hero → Interactive Demo → How It Works → Product Hunt → Final CTA
