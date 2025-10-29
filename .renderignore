@@ -6,6 +6,13 @@
 .breakpoints
 __pycache__/
 .pythonlibs/
+.local/
+
+# Python virtual environments
+venv/
+env/
+ENV/
+.venv/
 
 # Debugging/development artifacts
 attached_assets/

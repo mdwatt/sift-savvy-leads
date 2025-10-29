@@ -5,6 +5,17 @@
 .cache/
 .breakpoints
 
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv/
+
 # OS
 .DS_Store
 Thumbs.db
@@ -19,3 +30,7 @@ uv.lock
 
 # Debugging artifacts
 attached_assets/
+
+# Python libs
+.pythonlibs/
+.local/
