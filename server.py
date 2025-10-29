@@ -159,7 +159,7 @@ def test_openai():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    print(f"Starting server on port {port}...", file=sys.stderr)
+    print(f"Starting development server on port {port}...", file=sys.stderr)
     print(f"OpenAI API key configured: {'Yes' if openai_api_key else 'No'}", file=sys.stderr)
     print(f"OpenAI base URL: {openai_base_url or 'Default (api.openai.com)'}", file=sys.stderr)
     sys.stderr.flush()

@@ -27,9 +27,17 @@ Streamlined, conversion-focused landing page for Sift Savvy, an AI-powered inbox
 - Render uses only `requirements.txt` for Python dependencies
 
 ## Recent Changes
+- **2025-10-29**: Converted to production WSGI server (Gunicorn)
+  - Added Gunicorn 22.0.0 to requirements.txt for production deployment
+  - Render start command: `gunicorn --bind 0.0.0.0:$PORT --workers 2 --threads 4 --timeout 120 server:app`
+  - Production-ready configuration replaces Flask development server
+  - Deployed as Web Service on Render (not Static Site)
+  - Custom domain: https://leads.siftsavvy.com
+  - Architect Agent verified all endpoints functional with Gunicorn
+
 - **2025-10-28**: Fixed Render deployment issue (permanent fix)
-  - Root cause: Replit-specific files (pyproject.toml, uv.lock) confused Render's deployment
-  - Solution: Created .renderignore to exclude development artifacts
+  - Root cause: Service was configured as Static Site instead of Web Service
+  - Solution: Recreated as Web Service + updated .gitignore/.renderignore to exclude venv/
   - Added /api/test-openai endpoint for OpenAI connection diagnostics
   - Enhanced error logging with detailed stack traces for production debugging
   - Server.py verified working in both dev and production environments
