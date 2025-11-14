@@ -51,7 +51,7 @@
     form-action 'self';
     object-src 'none';
     upgrade-insecure-requests;
-    navigate-to 'self' https://siftsavvy.com;">
+    navigate-to 'self' https://siftsavvy.com https://mobilemdw.gumroad.com;">
   <meta http-equiv="Permissions-Policy" content="browsing-topics=(), interest-cohort=()">
 
   <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any">
@@ -128,6 +128,8 @@
     .fd-cta{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
     .fd-btn{padding:10px 14px; border-radius:10px; border:1px solid #e5e7eb; background:#111418; color:#fff; cursor:pointer; font-weight:600}
     .fd-btn.secondary{background:#fff; color:#0b0d10}
+    .fd-btn.green{background:#10b981; border-color:#10b981; color:#fff}
+    .fd-btn.green:hover{background:#059669}
     .fd-small{font-size:12px; color:#6b7280}
     .fd-bullet{margin:0; padding-left:18px; color:#111827}
     .fd-bullet li{margin:6px 0}
@@ -326,6 +328,7 @@
           <a class="fd-btn" id="fd_demo" href="/assets/Sift Savvy - Lead Extraction Platform Demo.mp4" target="_blank" rel="noopener">Watch 1-min Demo</a>
           <a class="fd-btn secondary" id="fd_request"
              href="mailto:support@siftsavvy.com?subject=Early%20Access%20Request&body=Hi%20Sift%20Savvy%20team%2C%0A%0AI'd%20like%20early%20access.%20My%20use%20case%3A%20%5Bbriefly%5D.%20Volume%2Fweek%3A%20%5Bxx%5D.%0A%0AThanks!">Request Early Access</a>
+          <a class="fd-btn green" id="fd_guide" href="https://mobilemdw.gumroad.com/l/viphqy?wanted=true" target="_blank" rel="noopener">Get FREE AI Lead Guide</a>
           <button class="fd-btn secondary" id="fd_continue">Continue to Dashboard</button>
         </div>
         <div class="fd-small" style="margin-top:10px">This helps us validate demand and prioritize features. Thanks for the signal.</div>
@@ -373,6 +376,7 @@
       const closeBtn = document.getElementById('fd_close');
       const demoBtn  = document.getElementById('fd_demo');
       const reqBtn   = document.getElementById('fd_request');
+      const guideBtn = document.getElementById('fd_guide');
       const contBtn  = document.getElementById('fd_continue');
 
       const body = document.body;
@@ -392,6 +396,7 @@
 
       demoBtn.addEventListener('click', ()=> track('fake_door_demo_click'));
       reqBtn.addEventListener('click',  ()=> track('fake_door_request_access'));
+      guideBtn.addEventListener('click', ()=> track('fake_door_guide_click'));
 
       ['cta_try','cta_run_first'].forEach(id=>{
         const el = document.getElementById(id);

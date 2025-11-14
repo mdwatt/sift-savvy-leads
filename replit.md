@@ -27,6 +27,15 @@ Streamlined, conversion-focused landing page for Sift Savvy, an AI-powered inbox
 - Render uses only `requirements.txt` for Python dependencies
 
 ## Recent Changes
+- **2025-10-31**: Added FREE AI Lead Guide CTA to popup ✅
+  - Added 4th green button "Get FREE AI Lead Guide" to fake door popup
+  - Links to Gumroad product: https://mobilemdw.gumroad.com/l/viphqy?wanted=true
+  - Opens in new tab with proper security (target="_blank" rel="noopener")
+  - Green styling for high conversion (#10b981 background, #059669 hover)
+  - Analytics tracking added (fake_door_guide_click event)
+  - CSP updated to allow Gumroad navigation
+  - Architect Agent verified functionality and best practices
+
 - **2025-10-29**: Production deployment COMPLETE and VERIFIED ✅
   - Added Gunicorn 22.0.0 to requirements.txt for production deployment
   - Render start command: `gunicorn --bind 0.0.0.0:$PORT --workers 2 --threads 4 --timeout 120 server:app`
